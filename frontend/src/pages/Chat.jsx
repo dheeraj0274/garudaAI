@@ -19,6 +19,20 @@ const [editedText, setEditedText] = useState("");
   ]);
   const [input, setInput] = useState("");
 
+
+  const saveEdit = (i)=>{
+    const updated = [...messages]
+
+    if(editedText.trim()===''){
+      updated.splice(i,1)
+    }
+    else{
+      updated[i].text=editedText;
+    }
+    setMessages(updated);
+    setEditingIndex(null);
+  }
+
   return (
     <div className="flex flex-col mt-15 h-screen bg-gray-900 text-white w-full">
         <div className="fixed">
@@ -42,19 +56,9 @@ const [editedText, setEditedText] = useState("");
   <input
     value={editedText}
     onChange={(e) => setEditedText(e.target.value)}
-    onBlur={() => {
-      const updated = [...messages];
-      updated[i].text = editedText;
-      setMessages(updated);
-      setEditingIndex(null);
-    }}
+    onBlur={saveEdit}
     onKeyDown={(e) => {
-      if (e.key === "Enter") {
-        const updated = [...messages];
-        updated[i].text = editedText;
-        setMessages(updated);
-        setEditingIndex(null);
-      }
+      if (e.key === "Enter") saveEdit(i);
     }}
     autoFocus
     className="bg-transparent border-b border-gray-400 outline-none w-full text-white"
@@ -62,13 +66,16 @@ const [editedText, setEditedText] = useState("");
 ) : (
   msg.text
 )}
-
-            <FaRegEdit className="pr-3 cursor-pointer"
+              
+              {
+                messages.length==0 ? null  : <FaRegEdit className="pr-3 cursor-pointer"
              size={30}
              onClick={()=>{
                 setEditingIndex(i);
                 setEditedText(msg.text)
              }}/>
+              }
+            
               </div>
            
             
