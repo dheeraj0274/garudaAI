@@ -20,6 +20,8 @@ const [editedText, setEditedText] = useState("");
     { role: "user", text: initialPrompt }
   ]);
   const [input, setInput] = useState("");
+  console.log('messages',messages);
+  
 
 
   const saveEdit = (i)=>{
