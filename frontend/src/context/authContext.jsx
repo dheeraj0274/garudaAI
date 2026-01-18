@@ -9,6 +9,7 @@ export const AuthProvider=({children})=>{
 
     const [showLogin , setShowLogin] = useState(false);
     const [showReg , setShowReg]=useState(false)
+    const [isLoggedIn ,setLoggedIn]=useState(false);
 
     const openLogin= ()=>(setShowLogin(true))
     const closeLogin = ()=>(setShowLogin(false))

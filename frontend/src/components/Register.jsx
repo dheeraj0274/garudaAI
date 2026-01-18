@@ -39,10 +39,7 @@ const Register = () => {
 
   const sumbitUser = async () => {
     setOtp(true);
-    setTimeout(() => {
-        submitOTP();
-        
-    },2000);
+    
   };
 
   return (
@@ -119,10 +116,10 @@ const Register = () => {
                  
               </div>
               <Button
-              onClick={sumbitUser}
+              onClick={otp ? submitOTP : sumbitUser}
               className="bg-green-600 w-full h-7 mt-4 text-white cursor-pointer"
             >
-              {otp ? 'Sumbit Otp' : 'Register'}
+              {otp ? 'Sumbit OTP' : 'Register'}
             </Button>
 
               <div className="flex items-center justify-center  gap-1 mt-7">

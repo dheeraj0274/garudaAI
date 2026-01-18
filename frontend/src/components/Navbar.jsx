@@ -18,11 +18,13 @@ import {Link} from 'react-router-dom'
 import { IoGiftOutline } from "react-icons/io5";
 
 import {useAuth} from '../context/authContext'
+import { HdIcon } from "lucide-react";
 
 const Navbar = () => {
 
  const [selectLogo,setLogo]=useState(logo);
- const{openLogin}=useAuth()
+ const{openLogin}=useAuth();
+ const {isLoggedIn}=useAuth();
 
 
 
@@ -71,7 +73,7 @@ const Navbar = () => {
               </div>
 
       {/* center-section */}
-      <div className="flex justify-between   md:gap-4 md:w-[300px]">
+      <div className="flex justify-between items-center   md:gap-4 md:w-[300px]">
 
         <li className="list-none ">
           <Link to='/'
@@ -108,9 +110,9 @@ const Navbar = () => {
       <div className="flex md:gap-3 items-center">
         <DropdownMenu >
           <DropdownMenuTrigger className='outline-none'>
-            <Avatar className='mr-1 bg-zinc-800  '>
+            <Avatar className={isLoggedIn ? 'block mr-1 bg-zinc-800' : 'hidden'} >
   <AvatarImage  />
-  <AvatarFallback className='text-orange-200 w-100  '>DY</AvatarFallback>
+  <AvatarFallback >DY</AvatarFallback>
 </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent className='mr-1 bg-gray-600  border-none mt-5'>
@@ -141,10 +143,10 @@ const Navbar = () => {
            
           </DropdownMenuContent>
         </DropdownMenu>
-        <IoGiftOutline size={25} color='yellow'/>
+        <IoGiftOutline className={isLoggedIn ? 'block' : 'hidden'} size={25} color='yellow'/>
 
 
-        <Button className='bg-blue-600 h-7.5 ' onClick={openLogin}>Login</Button>
+        <Button className='bg-purple-400 ml-1 text-white h-[30px] w-[50px] ' onClick={openLogin}>Login</Button>
   
       </div>
     </div>
