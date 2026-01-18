@@ -7,6 +7,8 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { BiMicrophone } from 'react-icons/bi'
 import { FaRegEdit } from "react-icons/fa";
 
+import { responses } from "../lib/response";
+
 const Chat = () => {
   const [editingIndex, setEditingIndex] = useState(null);
 const [editedText, setEditedText] = useState("");
@@ -32,6 +34,43 @@ const [editedText, setEditedText] = useState("");
     setMessages(updated);
     setEditingIndex(null);
   }
+
+
+  const sendPrompt = async()=>{
+
+    if(!input.trim()) return ;
+
+    const userMsg = {role:'user',text:input};
+    setMessages((prev)=>[...prev,userMsg]);
+    setInput('');
+
+
+    setTimeout(()=>{
+     const Botreply=  getBotReply(input);
+     console.log('notreply' , Botreply);
+     
+     setMessages((prev)=>[...prev,{role:'assistant' , text:Botreply}])
+  
+    },3000)
+
+
+
+  }
+  const getBotReply = (userText)=>{
+    const words = userText.toLowerCase().split(" ");
+
+    for(let item of responses){
+      for(let keyword of item.keywords){
+        if(words.includes(keyword)){
+          return item.reply;
+        }
+      }
+    }
+    return "Sorry i didn't understand that";
+
+  }
+
+
 
   return (
     <div className="flex flex-col mt-15 h-screen bg-gray-900 text-white w-full">
@@ -68,7 +107,7 @@ const [editedText, setEditedText] = useState("");
 )}
               
               {
-                messages.length==0 ? null  : <FaRegEdit className="pr-3 cursor-pointer"
+                messages.length==0 ? null  : msg.role=='assistant' ? null :<FaRegEdit className="pr-3 cursor-pointer"
              size={30}
              onClick={()=>{
                 setEditingIndex(i);
@@ -105,8 +144,9 @@ const [editedText, setEditedText] = useState("");
             size={24}
             className="cursor-pointer text-green-500"
             onClick={() => {
-              setMessages([...messages, { role: "user", text: input }]);
+              // setMessages([...messages, { role: "user", text: input }]);
               setInput("");
+              sendPrompt();
             }}
           />
         )}
