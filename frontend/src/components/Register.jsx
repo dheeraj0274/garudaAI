@@ -32,8 +32,17 @@ const Register = () => {
   const { setShowReg } = useAuth();
   const [otp, setOtp] = useState(false);
 
+
+  const submitOTP=async()=>{
+    setOtp(false);
+  }
+
   const sumbitUser = async () => {
     setOtp(true);
+    setTimeout(() => {
+        submitOTP();
+        
+    },2000);
   };
 
   return (
@@ -84,18 +93,15 @@ const Register = () => {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col">
-            <Button
-              onClick={sumbitUser}
-              className="bg-green-600 w-full h-7 mt-15 text-white"
-            >
-              Register
-            </Button>
+           
 
             <div className="flex flex-col w-full">
-              <div className=" flex  w-full h-full items-center justify-center gap-1 mt-3">
-                {otp ? (
+              <div className=" flex  w-full h-full items-center justify-center gap-1 ">
+                {otp ? 
+                <div className="flex flex-col items-center gap-2">
+                
                   <InputOTP maxLength={6}>
-                    <InputOTPGroup>
+                    <InputOTPGroup className='text-white gap-1'>
                       <InputOTPSlot index={0} />
                       <InputOTPSlot index={1} />
                       <InputOTPSlot index={2} />
@@ -107,8 +113,17 @@ const Register = () => {
                      
                     
                   </InputOTP>
-                ) : null}
+                  <span className="text-gray-400 text-[12px]">Otp sent to the email</span>
+                  </div>
+                : null}
+                 
               </div>
+              <Button
+              onClick={sumbitUser}
+              className="bg-green-600 w-full h-7 mt-4 text-white cursor-pointer"
+            >
+              {otp ? 'Sumbit Otp' : 'Register'}
+            </Button>
 
               <div className="flex items-center justify-center  gap-1 mt-7">
                 <p className="text-zinc-200 text-[12px]">
