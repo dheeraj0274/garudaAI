@@ -1,13 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { IoSend } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SidebarTrigger } from "../components/ui/sidebar";
 import { AiOutlinePlus } from 'react-icons/ai'
 import { BiMicrophone } from 'react-icons/bi'
 import { FaRegEdit } from "react-icons/fa";
 
 import { responses } from "../lib/response";
+import { useRef } from "react";
 
 const Chat = () => {
   const [editingIndex, setEditingIndex] = useState(null);
@@ -16,12 +17,30 @@ const [editedText, setEditedText] = useState("");
   const location = useLocation();
   const initialPrompt = location.state?.prompt || "";
 
-  const [messages, setMessages] = useState([
-    { role: "user", text: initialPrompt }
-  ]);
+ const [messages, setMessages] = useState(
+  initialPrompt ? [{ role: "user", text: initialPrompt }] : []
+);
+
   const [input, setInput] = useState("");
   console.log('messages',messages);
+
+
+  const hasRun=useRef(false)
   
+useEffect(()=>{
+
+  if(!initialPrompt || hasRun.current) return;
+  hasRun.current=true;
+      const initial= getBotReply(initialPrompt);
+      console.log('initial',initial);
+      setMessages((prev) => [
+    ...prev,
+    { role: "assistant", text: initial }
+  ]);
+      
+      
+       
+},[initialPrompt])
 
 
   const saveEdit = (i)=>{
@@ -75,7 +94,7 @@ const [editedText, setEditedText] = useState("");
 
 
   return (
-    <div className="flex flex-col mt-15 h-screen bg-gray-900 text-white w-full">
+    <div className="flex flex-col mt-15 min-h-screen bg-gray-900 text-white w-full">
         <div className="fixed">
                <SidebarTrigger/>
             </div>
@@ -135,7 +154,7 @@ const [editedText, setEditedText] = useState("");
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Ask to Garuda"
-          className="bg-transparent w-[400px] text-white border-0 focus-visible:ring-0"
+          className="bg-transparent md:w-[400px] text-white border-0 focus-visible:ring-0"
         />
 
                 </div>
