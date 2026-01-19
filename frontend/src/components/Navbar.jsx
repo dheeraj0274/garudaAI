@@ -99,7 +99,7 @@ const Navbar = () => {
     px-3 py-2 rounded-md
     transition-all duration-200 ease-out
     hover:text-white hover:bg-white/10"
-          to='/about'>Support</Link>
+          to='/support'>Support</Link>
           
         </li>
 

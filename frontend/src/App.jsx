@@ -9,6 +9,8 @@ import Login from './components/Login.jsx'
 import { AuthProvider } from './context/authContext.jsx'
 import ESidebar from './components/ESidebar.jsx'
 import Chat from './pages/Chat.jsx'
+import About from './components/About.jsx'
+import Support from './components/Support.jsx'
 function App() {
  
 
@@ -29,6 +31,8 @@ function App() {
  
       <Route path="/" Component={Home}/>
        <Route path="/chat" Component={Chat}/>
+       <Route path="/about" Component={About}/>
+       <Route path='/support' Component={Support} />
  
          
 
