@@ -18,7 +18,6 @@ import { GrFormClose } from "react-icons/gr";
 import logo from "../assets/LogoCrop.jpeg";
 
 import { useAuth } from "../context/authContext";
-import { useState } from "react";
 import Register from "./Register";
 
 const Login = () => {

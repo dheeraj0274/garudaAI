@@ -48,7 +48,12 @@ const Home = () => {
              focus:!border-none focus:!outline-none
              focus:!ring-0 focus:!ring-transparent" 
              placeholder="Ask to Garuda" 
-             onChange={(e)=>setPrompt(e.target.value)}/>
+             onChange={(e)=>setPrompt(e.target.value)}
+             onKeyDown={(e)=>{
+              if(e.key==='Enter') promptSumbit();
+             }}
+             />
+             
             </div>
 
 

@@ -1,9 +1,13 @@
 import React from "react";
+import { SidebarTrigger } from "../components/ui/sidebar";
 
 const About = () => {
   return (
     <div className="min-h-screen bg-[#0f172a] text-gray-200 px-6 py-16">
       <div className="max-w-full mx-auto">
+        <div className="fixed">
+               <SidebarTrigger className='text-white '/>
+            </div>
         
         
         <div className="text-center mb-12">

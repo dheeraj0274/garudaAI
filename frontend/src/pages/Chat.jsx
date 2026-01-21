@@ -9,6 +9,9 @@ import { FaRegEdit } from "react-icons/fa";
 
 import { responses } from "../lib/response";
 import { useRef } from "react";
+import {useAuth} from '../context/authContext'
+import { BeatLoader } from "react-spinners";
+
 
 const Chat = () => {
   const [editingIndex, setEditingIndex] = useState(null);
@@ -23,6 +26,9 @@ const [editedText, setEditedText] = useState("");
 
   const [input, setInput] = useState("");
   console.log('messages',messages);
+
+
+   const {loading ,setLoading} =useAuth();
 
 
   const hasRun=useRef(false)
@@ -64,13 +70,15 @@ useEffect(()=>{
     const userMsg = {role:'user',text:input};
     setMessages((prev)=>[...prev,userMsg]);
     setInput('');
+    setLoading(true);
 
 
     setTimeout(()=>{
      const Botreply=  getBotReply(input);
      console.log('notreply' , Botreply);
      
-     setMessages((prev)=>[...prev,{role:'assistant' , text:Botreply}])
+     setMessages((prev)=>[...prev,{role:'assistant' , text:Botreply}]);
+     setLoading(false)
   
     },3000)
 
@@ -105,10 +113,10 @@ useEffect(()=>{
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`max-w-[80%] p-2 rounded-2xl indent-1.5 ${
+            className={`max-w-[70%] p-2 mt-9 rounded-2xl indent-1.5 ${
               msg.role === "user"
                 ? "ml-auto bg-gray-500"
-                : "mr-auto bg-gray-700"
+                : "ml-7  bg-gray-700"
             }`}
           >
             <div className="flex justify-between items-center">
@@ -141,6 +149,12 @@ useEffect(()=>{
             
           </div>
         ))}
+        {loading && (
+  <div className="ml-7 max-w-[70%] p-3 rounded-2xl bg-gray-700">
+    <BeatLoader color="#9CA3AF" size={8} />
+  </div>
+)}
+
       </div>
 
       
@@ -153,6 +167,10 @@ useEffect(()=>{
                <Input
           value={input}
           onChange={(e) => setInput(e.target.value)}
+           onKeyDown={(e)=>{
+              if(e.key==='Enter') sendPrompt();
+
+            }}
           placeholder="Ask to Garuda"
           className="bg-transparent md:w-[400px] text-white border-0 focus-visible:ring-0"
         />
@@ -168,7 +186,9 @@ useEffect(()=>{
               // setMessages([...messages, { role: "user", text: input }]);
               setInput("");
               sendPrompt();
+              
             }}
+           
           />
         )}
 
