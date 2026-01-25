@@ -1,11 +1,20 @@
 import express from 'express'
-
+import authRoutes from './Routes/authRoutes.js'
 const app = express();
 
 
+app.use(express.json());
+
+
 app.get('/',(req,res)=>{
-    resizeBy.send('hi');
+    res.send('hi');
 })
+
+
+app.use('/api/auth',authRoutes)
+
+
+
 
 
 
