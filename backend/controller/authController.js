@@ -48,8 +48,10 @@ export const login= async(req,res)=>{
     const {email , password}=req.body;
 
 
-     const isUser= User.findOne({email});
-     if(!isUser) return res.status(201).json({
+     const user= await User.findOne({email});
+    
+     
+     if(!user) return res.status(201).json({
         success:false,
         message:'Register first!'
      })
@@ -71,7 +73,16 @@ export const login= async(req,res)=>{
      res.status(200).json({
         success:true,
         token,
-        message:"User registef succesfully"
+        message:"User register succesfully"
      })
 
+}
+
+
+export const profile=(req,res)=>{
+    res.status(200).json({
+        success:true,
+        mesage:'protected route',
+        User:req.user
+    })
 }
