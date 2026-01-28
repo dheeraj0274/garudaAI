@@ -3,11 +3,11 @@ import {GoogleGenAI} from '@google/genai';
 
 export const geminiResponse = async(req,res)=>{
     const {prompt} = req.body;
-    const ai = new GoogleGenAI({});
+    const ai = new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
    try {
     const response = await ai.models.generateContent({
-        model:"gemini-3-flash-review",
-        content:prompt,
+        model:"gemini-2.5-flash",
+        contents:prompt,
         config:{
              systemInstruction:'You are an AI model and your name is Garuda-AI , made by D&K'
         }
