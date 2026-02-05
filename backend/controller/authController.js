@@ -1,7 +1,8 @@
 
 import User from "../config/models/User.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+
+import { signToken } from "../utils/authutiils.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -25,9 +26,7 @@ export const registerUser = async (req, res) => {
 
     const savedUser = await user.save();
 
-    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = signToken(savedUser._id);
 
     res.cookie('token',token , {
       httpOnly:true,
@@ -63,7 +62,7 @@ export const login= async(req,res)=>{
         message:'Register first!'
      })
 
-     const isMatched = bcrypt.compare(password , user.password);
+     const isMatched = await bcrypt.compare(password , user.password);
 
      if(!isMatched) return res.status(401).json({
         success:false,
@@ -71,12 +70,8 @@ export const login= async(req,res)=>{
      });
 
 
-     const token = jwt.sign(
-        {id:user.id},
-        process.env.JWT_SECRET,
-        {expiresIn:"1d"}
-
-     )
+    
+    const token = signToken(user.id);
      res.cookie('token',token , {
       httpOnly:true,
       sameSite:'strict',
