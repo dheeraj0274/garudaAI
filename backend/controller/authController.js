@@ -29,9 +29,16 @@ export const registerUser = async (req, res) => {
       expiresIn: "1d",
     });
 
+    res.cookie('token',token , {
+      httpOnly:true,
+      sameSite:'strict',
+      secure:process.env.NODE_ENV==='production',
+      maxAge:24*60*60*1000
+    })
+
     res.status(201).json({
       success: true,
-      token,
+      
       user: savedUser,
       message: "User registered!",
     });
@@ -70,10 +77,16 @@ export const login= async(req,res)=>{
         {expiresIn:"1d"}
 
      )
+     res.cookie('token',token , {
+      httpOnly:true,
+      sameSite:'strict',
+      secure:process.env.NODE_ENV==='production',
+      maxAge:24*60*60*1000
+    })
      res.status(200).json({
         success:true,
-        token,
-        message:"User register succesfully"
+        
+        message:"Login successfully"
      })
 
 }
@@ -85,4 +98,20 @@ export const profile=(req,res)=>{
         mesage:'protected route',
         User:req.user
     })
+}
+
+
+export const logOut=(req,res)=>{
+
+  res.clearCookie('token',{
+    httpOnly:true,
+    sameSite:'strict',
+    secure:process.env.NODE_ENV==='production'
+  })
+
+  res.status(200).json({
+    success:true,
+    message:'Logged-Out'
+  })
+
 }
