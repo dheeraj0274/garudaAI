@@ -17,12 +17,12 @@ export const sendOtp = async (req, res) => {
     }
     await otp.deleteMany({ email });
 
-    const OTP = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log("otp", OTP);
+    const userOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log("otp", userOTP);
 
     await otp.create({
       email,
-      otp: OTP,
+      otp: userOTP,
       expiresAt: Date.now() + 5 * 60 * 1000,
     });
 
@@ -54,7 +54,7 @@ export const sendOtp = async (req, res) => {
     sendEmail({
       to: email,
       subject: "Your Otp for verification",
-      html: `<h2>Your otp is ${OTP}</h2><br><p>Valid for 5 minutes</p>`,
+      html: `<h2>Your otp is ${userOTP}</h2><br><p>Valid for 5 minutes</p>`,
     }).catch(console.errror);
   } catch (error) {
     res.status(500).json({
@@ -65,9 +65,67 @@ export const sendOtp = async (req, res) => {
 };
 
 export const verifyOtpAndRegister = async (req, res) => {
-  const { email, name, password, otp } = req.body;
+  const { email, name, password, userOTP } = req.body;
   try {
-  } catch (error) {}
+
+    const otpRecord = await otp.findOne({email});
+    const isUser = await User.findOne({email});
+
+    if(isUser) return res.status(400).json({
+      success:false,
+      message:'Already registered'
+    })
+
+    if(!otpRecord) return res.status(400).json({
+      success:false,
+      message:'Otp not found or expired'
+    })
+
+
+    if(otpRecord.otp != userOTP) return res.status(401).json({
+      success:true,
+      message:'Invalid OTP'
+    })
+
+    if(otpRecord.expiresAt<Date.now()) return res.status(400).json({
+      success:false,
+      message:'OTP Expired'
+    })
+   
+    const hashedPassword = await bcrypt.hash(password,10);
+
+    const user =  new User({
+      name,
+      email,
+      password:hashedPassword
+    })
+
+    const savedUser = await user.save();
+    const token = signToken(savedUser._id)
+
+    res.cookie('token' , token, {
+      httpOnly:true,
+      sameSite:'strict',
+      secure:process.env.NODE_ENV==='production',
+      maxAge:24*60*60*1000
+
+    })
+
+    res.status(201).json({
+      success:true,
+      savedUser,
+      message:'user registered successfully'
+    })
+    
+
+  } catch (error) {
+
+
+    res.status(500).json({
+      succes:false,
+      error:error.message
+    })
+  }
 };
 
 export const login = async (req, res) => {
