@@ -1,10 +1,10 @@
 import dotenv from 'dotenv'
-import app from "./app.js";
-import mongoose from 'mongoose'
-
 
 
 dotenv.config({path:"./config/.env"})
+import app from "./app.js";
+import mongoose from 'mongoose'
+
 
 
 const db = async()=>{

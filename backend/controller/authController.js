@@ -1,10 +1,10 @@
-
 import User from "../config/models/User.js";
 import bcrypt from "bcryptjs";
-
+import otp from "../config/models/otp.js";
 import { signToken } from "../utils/authutiils.js";
+import sendEmail from "../utils/sendEmail.js";
 
-export const registerUser = async (req, res) => {
+export const sendOtp = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -15,32 +15,47 @@ export const registerUser = async (req, res) => {
         message: "User already exists",
       });
     }
+    await otp.deleteMany({ email });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const OTP = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log("otp", OTP);
 
-    const user = new User({
-      name,
+    await otp.create({
       email,
-      password: hashedPassword,
+      otp: OTP,
+      expiresAt: Date.now() + 5 * 60 * 1000,
     });
 
-    const savedUser = await user.save();
+    // const hashedPassword = await bcrypt.hash(password, 10);
 
-    const token = signToken(savedUser._id);
+    // const user = new User({
+    //   name,
+    //   email,
+    //   password: hashedPassword,
+    // });
 
-    res.cookie('token',token , {
-      httpOnly:true,
-      sameSite:'strict',
-      secure:process.env.NODE_ENV === 'production',
-      maxAge:24*60*60*1000
-    })
+    // const savedUser = await user.save();
 
-    res.status(201).json({
+    // const token = signToken(savedUser._id);
+
+    // res.cookie('token',token , {
+    //   httpOnly:true,
+    //   sameSite:'strict',
+    //   secure:process.env.NODE_ENV === 'production',
+    //   maxAge:24*60*60*1000
+    // })
+
+    res.status(200).json({
       success: true,
-      
-      user: savedUser,
-      message: "User registered!",
+
+      message: "OTP  sent",
     });
+
+    sendEmail({
+      to: email,
+      subject: "Your Otp for verification",
+      html: `<h2>Your otp is ${OTP}</h2><br><p>Valid for 5 minutes</p>`,
+    }).catch(console.errror);
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -49,64 +64,62 @@ export const registerUser = async (req, res) => {
   }
 };
 
+export const verifyOtpAndRegister = async (req, res) => {
+  const { email, name, password, otp } = req.body;
+  try {
+  } catch (error) {}
+};
 
-export const login= async(req,res)=>{
-    const {email , password}=req.body;
+export const login = async (req, res) => {
+  const { email, password } = req.body;
 
+  const user = await User.findOne({ email });
 
-     const user= await User.findOne({email});
-    
-     
-     if(!user) return res.status(201).json({
-        success:false,
-        message:'Register first!'
-     })
+  if (!user)
+    return res.status(201).json({
+      success: false,
+      message: "Register first!",
+    });
 
-     const isMatched = await bcrypt.compare(password , user.password);
+  const isMatched = await bcrypt.compare(password, user.password);
 
-     if(!isMatched) return res.status(401).json({
-        success:false,
-        message:'Incorrect Password'
-     });
+  if (!isMatched)
+    return res.status(401).json({
+      success: false,
+      message: "Incorrect Password",
+    });
 
+  const token = signToken(user.id);
+  res.cookie("token", token, {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 24 * 60 * 60 * 1000,
+  });
+  res.status(200).json({
+    success: true,
 
-    
-    const token = signToken(user.id);
-     res.cookie('token',token , {
-      httpOnly:true,
-      sameSite:'strict',
-      secure:process.env.NODE_ENV==='production',
-      maxAge:24*60*60*1000
-    })
-     res.status(200).json({
-        success:true,
-        
-        message:"Login successfully"
-     })
+    message: "Login successfully",
+  });
+};
 
-}
+export const profile = (req, res) => {
+  res.status(200).json({
+    success: true,
+    mesage: "protected route",
+    User: req.user,
+  });
+};
 
-
-export const profile=(req,res)=>{
-    res.status(200).json({
-        success:true,
-        mesage:'protected route',
-        User:req.user
-    })
-}
-
-
-export const logOut=(req,res)=>{
-
-  res.clearCookie('token',{
-    httpOnly:true,
-    sameSite:'strict',
-    secure:process.env.NODE_ENV==='production'
-  })
+export const logOut = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+  });
 
   res.status(200).json({
-    success:true,
-    message:'Logged-Out'
-  })
-
-}
+    success: true,
+    message: "Logged-Out",
+  });
+};
