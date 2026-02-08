@@ -112,7 +112,7 @@ const Navbar = () => {
           <DropdownMenuTrigger className='outline-none'>
             <Avatar className={isLoggedIn ? 'block mr-1 bg-zinc-800' : 'hidden'} >
   <AvatarImage  />
-  <AvatarFallback >DY</AvatarFallback>
+  <AvatarFallback >{userName}</AvatarFallback>
 </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent className='mr-1 bg-gray-600  border-none mt-5'>
