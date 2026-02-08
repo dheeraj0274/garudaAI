@@ -11,13 +11,12 @@ import { Link } from "react-router-dom";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FaGoogle } from "react-icons/fa";
-import { DiBingSmall } from "react-icons/di";
+
 import { GrFormClose } from "react-icons/gr";
 
 import logo from "../assets/LogoCrop.jpeg";
 
-import { useAuth } from "../context/authContext";
+
 import { useState } from "react";
 import {
   InputOTP,
@@ -26,21 +25,106 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
+
+import axios from 'axios'
+import { useAuth } from "../context/authContext";
+import { Rss, TypeIcon } from "lucide-react";
+
 const Register = () => {
   const { closeLogin } = useAuth();
   const { showLogin } = useAuth();
   const { setShowReg } = useAuth();
   const [otp, setOtp] = useState(false);
 
+  const {loading , setLoading}=useAuth();
 
-  const submitOTP=async()=>{
-    setOtp(false);
-  }
+  const[userOtp ,setUserOtp]=useState();
+  const [form ,setForm]=useState({
+    name:'',
+    email:'',
+    password:''
+  })
+
+
 
   const sumbitUser = async () => {
-    setOtp(true);
+    
+
+    if(!form.name || !form.email || !form.password){
+      alert('please enter all value');
+      return
+    }
+    try {
+      setLoading(true)
+      
+     const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/sendOtp`, {
+      name:form.name,
+      email:form.email,
+      password:form.password
+     } , 
+    {withCredentials:true}
+  )
+
+  if(res.data.success){
+    console.log(res.data);
+    alert(res.data.message);
+     setOtp(true);
+  }
+      
+    } catch (error) {
+      alert(error.message||'otp-failed')
+      
+    }
+    finally{
+      setLoading(false)
+    }
+   
     
   };
+
+
+
+
+  
+  const submitOTP=async()=>{
+
+    try {
+      
+    if(!userOtp.length==4){
+      alert('please enter otp')
+      return
+    }
+    setLoading(true)
+    const res= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/verifyandregister`,{
+      name:form.name,
+      email:form.email,
+      password:form.password,
+      userOTP:userOtp
+
+    } , {
+      withCredentials:true
+    })
+
+    if(res.data.success){
+      alert(res.data.message)
+    }
+
+
+
+
+    setOtp(false);
+    closeLogin()
+      
+    } catch (error) {
+      alert(error.message)
+      
+    }
+    finally{
+      setLoading(false)
+    }
+    
+
+  }
 
   return (
     <div className="fixed inset-0  bg-black/40 backdrop-blur-sm z-40">
@@ -59,11 +143,11 @@ const Register = () => {
 
             <CardTitle className="text-white"></CardTitle>
             <CardDescription className="text-gray-400 text-[11px]">
-              Please enters your details to Register{" "}
+              Please enters your details to Register
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col ">
               <div>
                 <label
                   className="text-zinc-300 text-[13px] 
@@ -71,7 +155,9 @@ const Register = () => {
                 >
                   Full Name
                 </label>
-                <Input
+                <Input 
+                value={form.name}
+                onChange={(e)=>setForm({...form , name:e.target.value})}
                   className="h-5 border border-dashed border-gray-500
              text-[11px] text-zinc-300
              focus:!border-none focus:!outline-none
@@ -82,6 +168,18 @@ const Register = () => {
               <div>
                 <label className="text-zinc-300 text-[13px]">Email </label>
                 <Input
+                value={form.email}
+                onChange={(e)=>setForm({...form , email:e.target.value})}
+                  className="h-5 border-dashed border-gray-500 text-[10px] text-zinc-300
+                focus:!border-none    focus:!outline-none focus:!ring-0
+  "
+                />
+              </div>
+               <div>
+                <label className="text-zinc-300 text-[13px]">Password </label>
+                <Input 
+                value={form.password}
+                onChange={(e)=>setForm({...form , password:e.target.value})}
                   className="h-5 border-dashed border-gray-500 text-[10px] text-zinc-300
                 focus:!border-none    focus:!outline-none focus:!ring-0
   "
@@ -97,7 +195,10 @@ const Register = () => {
                 {otp ? 
                 <div className="flex flex-col items-center gap-2">
                 
-                  <InputOTP maxLength={6}>
+                  <InputOTP
+                  value={userOtp}
+                  onChange={(e)=>setUserOtp(e)} 
+                  maxLength={4}>
                     <InputOTPGroup className='text-white gap-1'>
                       <InputOTPSlot index={0} />
                       <InputOTPSlot index={1} />
@@ -119,10 +220,10 @@ const Register = () => {
               onClick={otp ? submitOTP : sumbitUser}
               className="bg-green-600 w-full h-7 mt-4 text-white cursor-pointer"
             >
-              {otp ? 'Sumbit OTP' : 'Register'}
+              {loading ? 'please wait...': otp ? 'Sumbit OTP' : 'Register'}
             </Button>
 
-              <div className="flex items-center justify-center  gap-1 mt-7">
+              <div className="flex items-center justify-center  gap-1 mt-4">
                 <p className="text-zinc-200 text-[12px]">
                   Alraedy have an account
                 </p>
