@@ -8,8 +8,7 @@ import { signToken } from './authutiils.js'
 
 
 const configurePassport = ()=>{
-    console.log("ENV clientId:", process.env.clientId);
-console.log("ENV GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
+    
 
 
 

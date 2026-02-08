@@ -17,7 +17,7 @@ export const sendOtp = async (req, res) => {
     }
     await otp.deleteMany({ email });
 
-    const userOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    const userOTP = Math.floor(1000 + Math.random() * 9000).toString();
     console.log("otp", userOTP);
 
     await otp.create({
@@ -139,7 +139,7 @@ export const login = async (req, res) => {
       message: "Register first!",
     });
 
-  const isMatched = await bcrypt.compare(password, user.password);
+  const isMatched =  bcrypt.compare(password, user.password);
 
   if (!isMatched)
     return res.status(401).json({
