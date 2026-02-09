@@ -4,6 +4,7 @@ import chatRoutes from './Routes/chatRoutes.js'
 import passport from 'passport'
 import cookieParser from 'cookie-parser';
 import configurePassport from './utils/passport.js';
+import cors from 'cors'
 const app = express();
 
 
@@ -13,6 +14,14 @@ app.use(cookieParser());
 configurePassport();
 
 app.use(passport.initialize());
+
+const coreOptions={
+    origin:"http://localhost:5173",
+    credentials:true
+   
+}
+
+app.use(cors(coreOptions));
 
 app.get('/',(req,res)=>{
     res.send('hi');

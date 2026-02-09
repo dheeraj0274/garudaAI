@@ -29,7 +29,7 @@ const configurePassport = ()=>{
                 let user = await User.findOne({email});
                 console.log('client',process.env.clientId)
 
-                if(user && user.authProvider==='google'){
+                if(user && user.authProvider!=='google'){
                     return done(null ,false , {
                         message:'Already registerd, Use email and password to login'
                     })

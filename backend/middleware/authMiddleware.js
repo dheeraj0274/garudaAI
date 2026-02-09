@@ -10,7 +10,9 @@ const authMiddleware= async(req,res,next)=>{
     try {
            
     const token= req.cookies.token;
-    console.log('token', token)
+    console.log('token' , token);
+    
+  
     
 
    
@@ -22,13 +24,12 @@ const authMiddleware= async(req,res,next)=>{
 
         const decoded = verifyToken(token);
 
-    console.log('userid',decoded._id);
 
 
     // const decoded= jwt.verify(token , process.env.JWT_SECRET);
   
     
-    const user=await User.findById(decoded._id).select("name email").lean()
+    const user=await User.findById(decoded._id).select("name email authProvider").lean()
     if(!user) return res.status(404).json({
         sucess:true,
         message:"User not found!",

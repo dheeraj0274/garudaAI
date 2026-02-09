@@ -1,4 +1,4 @@
-import { sendOtp  , login, profile, verifyOtpAndRegister} from "../controller/authController.js";
+import { sendOtp  , login, profile, verifyOtpAndRegister, logOut} from "../controller/authController.js";
 import { Router } from "express";
 import authMiddleware from "../middleware/authMiddleware.js";
 import { sendMessage } from "../controller/chatController.js";
@@ -18,8 +18,10 @@ router.get('/me' , authMiddleware , profile);
 router.get('/prompt',authMiddleware,sendMessage)
 
 router.post('/login' , login)
+router.get('/logout',logOut)
 router.get('/google',passport.authenticate("google",{
-    scope:['email','profile']
+    scope:['email','profile'],
+    prompt: 'select_account'
 }))
 
 router.get('/google/callback',googleAuthCallback)

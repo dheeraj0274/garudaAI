@@ -138,7 +138,15 @@ export const login = async (req, res) => {
       success: false,
       message: "Register first!",
     });
+ 
 
+    if(user && user.authProvider==='google'){
+      return res.status(409).json({
+        success:false,
+        message:'Use google login'
+
+      })
+    }
   const isMatched =  bcrypt.compare(password, user.password);
 
   if (!isMatched)
@@ -156,7 +164,7 @@ export const login = async (req, res) => {
   });
   res.status(200).json({
     success: true,
-
+    user,
     message: "Login successfully",
   });
 };
