@@ -1,5 +1,5 @@
 import User from "../config/models/User.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import otp from "../config/models/otp.js";
 import { signToken } from "../utils/authutiils.js";
 import sendEmail from "../utils/sendEmail.js";
