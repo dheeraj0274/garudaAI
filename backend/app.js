@@ -16,7 +16,7 @@ configurePassport();
 app.use(passport.initialize());
 
 const coreOptions={
-    origin:"http://localhost:5173",
+    origin:"https://garuda-ai-one.vercel.app",
     credentials:true
    
 }
