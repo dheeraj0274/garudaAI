@@ -36,7 +36,7 @@ const Register = () => {
   const { setShowReg } = useAuth();
   const [otp, setOtp] = useState(false);
 
-  const {loading , setLoading}=useAuth();
+  const {loading , setLoading , setLoggedIn}=useAuth();
 
   const[userOtp ,setUserOtp]=useState();
   const [form ,setForm]=useState({
@@ -69,6 +69,7 @@ const Register = () => {
     console.log(res.data);
     alert(res.data.message);
      setOtp(true);
+     setLoggedIn(true);
   }
       
     } catch (error) {

@@ -18,13 +18,37 @@ import {Link} from 'react-router-dom'
 import { IoGiftOutline } from "react-icons/io5";
 
 import {useAuth} from '../context/authContext'
-import { HdIcon } from "lucide-react";
+import axios from "axios";
+
 
 const Navbar = () => {
 
  const [selectLogo,setLogo]=useState(logo);
  const{openLogin}=useAuth();
- const {isLoggedIn}=useAuth();
+ const {isLoggedIn , setLoggedIn,setUserDetails, userDetails}=useAuth();
+
+const initials = userDetails?.name
+  ?.split(' ')
+  ?.slice(0, 2)
+  ?.reduce((acc, word) => acc + word[0], '')
+  ?.toUpperCase() || '';
+
+  const logout = async()=>{
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout` , {withCredentials:true});
+      if(res.data.success){
+            setUserDetails(null);
+            setLoggedIn(false);
+            
+            
+      }
+    } catch (error) {
+      alert(error.message)
+      
+    }
+  }
+
+ 
 
 
 
@@ -112,33 +136,37 @@ const Navbar = () => {
           <DropdownMenuTrigger className='outline-none'>
             <Avatar className={isLoggedIn ? 'block mr-1 bg-zinc-800' : 'hidden'} >
   <AvatarImage  />
-  <AvatarFallback >{userName}</AvatarFallback>
+  <AvatarFallback className='text-white' >{initials}</AvatarFallback>
 </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent className='mr-1 bg-gray-600  border-none mt-5'>
-            <DropdownMenuLabel className='text-gray-300'>Profile</DropdownMenuLabel>
+            <DropdownMenuLabel className='text-gray-100 font-semibold'>Profile</DropdownMenuLabel>
            
             <DropdownMenuSeparator />
 
             
-            <DropdownMenuItem className='hover:bg-gray-500'>  <img className="rounded-3xl" src={logo}
-             alt="logo" width={35}  />
+            <DropdownMenuItem className='hover:bg-gray-500'>  
              
-              <span className="text-[12px] font-semibold pl-1 text-zinc-300">Student</span></DropdownMenuItem>
+              <span className="text-[12px] font-semibold pl-1 text-zinc-300">{userDetails?.name}</span></DropdownMenuItem>
             
             
             
             <DropdownMenuItem className='hover:bg-gray-500'>
-                 <img className="rounded-3xl" src={logo}
-             alt="logo" width={35} />
-                <span className="pl-1 text-[12px] font-semibold text-zinc-300">Finance</span></DropdownMenuItem>
+               
+            
+                <span className="pl-1 text-[12px] font-semibold text-zinc-300">{userDetails?.email}</span></DropdownMenuItem>
             
             
             
             <DropdownMenuItem className='hover:bg-gray-500'>
-                 <img className="rounded-3xl" src={logo}
-             alt="logo" width={35} />
-                <span className="font-semibold text-[12px] pl-1 text-zinc-300">Creator</span></DropdownMenuItem>
+                 
+          
+                <span className="font-semibold text-[12px] pl-1 text-zinc-300">{userDetails?.authProvider}</span></DropdownMenuItem>
+
+            <DropdownMenuItem>
+                 <Button onClick={logout} className='text-red-300 font-bold'>Logout</Button>
+            </DropdownMenuItem>
+                
            
            
           </DropdownMenuContent>
@@ -146,7 +174,7 @@ const Navbar = () => {
         <IoGiftOutline className={isLoggedIn ? 'block' : 'hidden'} size={25} color='yellow'/>
 
 
-        <Button className='bg-purple-400 ml-1 text-white h-[30px] w-[50px] ' onClick={openLogin}>Login</Button>
+        <Button className={isLoggedIn ? 'hidden' : 'bg-purple-400 ml-1 text-white h-[30px] w-[50px]'}  onClick={openLogin}>Login</Button>
   
       </div>
     </div>

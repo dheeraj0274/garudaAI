@@ -30,12 +30,19 @@ const Home = () => {
   return (
     <div className="flex flex-row mt-15 p-4  bg-gray-800 w-full">
       {/* <ESidebar /> */}
-      <div>
+      <div >
         <SidebarTrigger className="text-white " />
       </div>
       <div className=" w-full">
         <div className="flex  items-center p-2 pt-20 flex-col w-full h-full">
           <div>
+              <span className="text-white font-semibold text-3xl">
+                Made for CUTU assembles 🥰💖🌸
+              </span>
+              
+            </div>
+          <div className="mt-7">
+            
 
             <br />
  <span className="font-bold text-yellow-600 tracking-wide text-4xl">GARUDA AI </span>
