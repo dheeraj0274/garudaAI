@@ -106,7 +106,7 @@ export const verifyOtpAndRegister = async (req, res) => {
     res.cookie('token' , token, {
       httpOnly:true,
       sameSite:'strict',
-      secure:process.env.NODE_ENV==='production',
+      secure:true,
       maxAge:24*60*60*1000
 
     })
@@ -159,7 +159,7 @@ export const login = async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     sameSite: "strict",
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
   res.status(200).json({
@@ -181,7 +181,7 @@ export const logOut = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     sameSite: "strict",
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
   });
 
   res.status(200).json({
