@@ -9,12 +9,6 @@ const app = express();
 
 
 app.use(express.json());
-app.use(cookieParser());
-
-configurePassport();
-
-app.use(passport.initialize());
-
 const coreOptions={
     origin:"https://garuda-ai-one.vercel.app",
     credentials:true
@@ -22,6 +16,13 @@ const coreOptions={
 }
 
 app.use(cors(coreOptions));
+app.use(cookieParser());
+
+configurePassport();
+
+app.use(passport.initialize());
+
+
 
 app.get('/',(req,res)=>{
     res.send('hi');
