@@ -55,7 +55,7 @@ export const sendOtp = async (req, res) => {
       to: email,
       subject: "Your Otp for verification",
       html: `<h2>Your otp is ${userOTP}</h2><br><p>Valid for 5 minutes</p>`,
-    }).catch(console.errror);
+    }).catch(console.error);
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -105,7 +105,7 @@ export const verifyOtpAndRegister = async (req, res) => {
 
     res.cookie('token' , token, {
       httpOnly:true,
-      sameSite:'strict',
+      sameSite:'none',
       secure:true,
       maxAge:24*60*60*1000
 
@@ -147,7 +147,7 @@ export const login = async (req, res) => {
 
       })
     }
-  const isMatched =  bcrypt.compare(password, user.password);
+  const isMatched = await bcrypt.compare(password, user.password);
 
   if (!isMatched)
     return res.status(401).json({
@@ -158,7 +158,7 @@ export const login = async (req, res) => {
   const token = signToken(user.id);
   res.cookie("token", token, {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "none",
     secure: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
@@ -180,7 +180,7 @@ export const profile = (req, res) => {
 export const logOut = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    sameSite: "strict",
+    sameSite: "none",
     secure: true,
   });
 
