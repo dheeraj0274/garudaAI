@@ -1,5 +1,8 @@
 import dotenv from 'dotenv'
-dotenv.config({ path: './config/.env' })
+
+dotenv.config(
+    {path:  process.env.NODE_ENV==='production' ? "./config/.env.production" : "./config/.env.development"}
+)
 
 import passport from 'passport'
 import {Strategy as GoogleStratgy} from 'passport-google-oauth20'
