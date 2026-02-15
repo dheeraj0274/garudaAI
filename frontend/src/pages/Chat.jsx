@@ -246,7 +246,7 @@ const Chat = () => {
     
       setMessages((prev) => [...prev, { role: "model", text: botReply }]);
     } catch (error) {
-      console.log(error);
+      console.log(error.messages);
       setMessages((prev) => [
         ...prev,
         { role: "model", text: "Sorry, couldn't get response." },
