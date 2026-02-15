@@ -19,33 +19,20 @@
 // };
 
 
-
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export const geminiresponse = async (chatHistory) => {
-  try {
-    const ai = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
-    });
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-    const result = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: chatHistory,
-      config: {
-        systemInstruction:
-          "You are an AI model and your name is Garuda-AI, made by D&K",
-      },
-    });
+  const model = genAI.getGenerativeModel({
+    model: "gemini-1.5-flash",
+    systemInstruction:
+      "You are an AI model and your name is Garuda-AI, made by D&K",
+  });
 
-    if (!result?.candidates?.length) {
-      console.log("Gemini bad response:", result);
-      throw new Error("No valid Gemini response");
-    }
+  const result = await model.generateContent(chatHistory);
 
-    return result.candidates[0].content.parts[0].text;
+  const response = await result.response;
 
-  } catch (error) {
-    console.log("Gemini Error:", error);
-    throw error;
-  }
+  return response.text();
 };
