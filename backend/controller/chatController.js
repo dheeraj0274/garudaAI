@@ -25,6 +25,7 @@ export const sendMessage = async (req, res) => {
     const contents = formateGemini(recentMessages);
 
     const reply = await geminiresponse(contents);
+    console.log('reply',reply)
 
     userChat.messages.push({ role: "model", text: reply });
 
