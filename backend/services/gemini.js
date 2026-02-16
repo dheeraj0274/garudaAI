@@ -5,7 +5,10 @@ export const geminiresponse = async (chatHistory) => {
     apiKey: process.env.GEMINI_API_KEY,
   });
 
-  const result = await ai.models.generateContent({
+
+
+  try {
+    const result = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: chatHistory,
     config: {
@@ -16,5 +19,14 @@ export const geminiresponse = async (chatHistory) => {
 
   const reply = result.candidates[0].content.parts[0].text;
   return reply;
+
+
+    
+  } catch (error) {
+    throw new error
+    
+  }
+
+  
 };
 
