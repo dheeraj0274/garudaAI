@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 import {
   Sidebar,
@@ -10,6 +10,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { IoMdArrowDropdown } from "react-icons/io";
+
+import axios from 'axios';
+import { useAuth } from '../context/authContext';
+
+
 
 
 
@@ -42,6 +48,14 @@ const items = [
 ]
 
 const ESidebar = () => {
+
+  const{chats , setChats,messages , loadAllChats}=useAuth();
+  
+
+
+useEffect(()=>{
+  loadAllChats()
+},[messages])
   return (
     <Sidebar className='mt-15  h-[calc(100vh-60px)] '>
       <SidebarContent className='bg-gray-900'>
@@ -62,7 +76,22 @@ const ESidebar = () => {
             </SidebarMenu>
             <SidebarMenu className='mt-10 p-3'>
               <div>
-                <span className='font-semibold text-white'>Your Chats</span>
+                <div className='flex items-center p-2 '>
+                  <span className='font-semibold text-white'>Your Chats</span>
+                <IoMdArrowDropdown color='white'/>
+
+                </div>
+                
+                {
+                  chats?.map((item)=>(
+                    <SidebarMenuItem key={item._id}>
+                      <SidebarMenuButton asChild>
+                        <span className='text-gray-300 text-[14px] '>{item.title}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+
+                  ))
+                }
               </div>
             </SidebarMenu>
           </SidebarGroupContent>
