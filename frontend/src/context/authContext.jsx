@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 console.log(userDetails);
 const loadAllChats= async()=>{
 try {
-  const res = await axios.post('http://localhost:5000/chat/allchat', {},{withCredentials:true} );
+  const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/chat/allchat`, {},{withCredentials:true} );
    
 
   const data= res.data.allChats;
