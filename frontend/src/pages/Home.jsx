@@ -36,9 +36,7 @@ const Home = () => {
       <div className=" w-full">
         <div className="flex  items-center p-2 pt-20 flex-col w-full h-full">
           <div>
-              <span className="text-white font-semibold text-3xl">
-                Made for CUTU assembles 🥰💖🌸
-              </span>
+              
               
             </div>
           <div className="mt-7">

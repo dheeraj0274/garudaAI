@@ -10,10 +10,11 @@ export const sendMessage = async (req, res) => {
   try {
     let userChat = await chat.findById(chatId);
     console.log('chat',userChat);
+    const title = prompt.slice(0.10);
     
 
     if (!userChat) {
-      userChat = await chat.create({ userId, messages: [] });
+      userChat = await chat.create({ userId, messages: [] ,title });
     }
 
     userChat.messages.push({ role: "user", text: prompt });
@@ -26,8 +27,10 @@ export const sendMessage = async (req, res) => {
 
     const reply = await geminiresponse(contents);
     console.log('reply',reply)
-
-    userChat.messages.push({ role: "model", text: reply });
+    
+   
+    userChat.messages.push({ role: "model", text: reply  });
+    
 
     await userChat.save();
 
@@ -80,6 +83,21 @@ export const newChat=async (req,res)=>{
     message:'new chat created'
   })
 
+
+
+}
+
+export const getAllChat= async(req,res)=>{
+  const user = req.user._id;
+  
+  const  allChats = await chat.find({userId:user});
+  
+
+  res.status(200).json({
+    success:true,
+    message:'all chat sent successfully',
+    allChats
+  })
 
 
 }

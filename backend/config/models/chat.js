@@ -16,7 +16,7 @@ const messageSchema= new mongoose.Schema({
     },
     createdAt:{
         type:Date,
-        Default:Date.now()
+        default:Date.now()
     }
 
 })
@@ -29,14 +29,14 @@ const chatSchema= new mongoose.Schema({
     },
     title:{
         type:String,
-        Default:"New chat",
+        default:"New chat",
 
     },
     messages:[messageSchema],
 
     isArchieved:{
         type:Boolean,
-        Default:false
+        default:false
 
     }
 

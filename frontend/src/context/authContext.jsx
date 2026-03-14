@@ -13,6 +13,13 @@ export const AuthProvider = ({ children }) => {
   const openLogin = () => setShowLogin(true);
   const closeLogin = () => setShowLogin(false);
 
+
+  const [chats,setChats]=useState([]);
+  const [currentchatId , setCurrentchatId] = useState(null)
+   const [messages, setMessages] = useState([
+    { role: "model", text: "Hi, I am Garuda!" },
+  ]);
+
  
   const fetchUser = async () => {
     try {
@@ -39,6 +46,27 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
 console.log(userDetails);
+const loadAllChats= async()=>{
+try {
+  const res = await axios.post('http://localhost:5000/chat/allchat', {},{withCredentials:true} );
+   
+
+  const data= res.data.allChats;
+  console.log('data',data)
+  
+  setChats(data)
+} catch (error) {
+  console.log('error',error)
+  setChats(null)
+  
+}
+
+  
+
+
+
+
+}
 
 
   return (
@@ -55,6 +83,13 @@ console.log(userDetails);
         setUserDetails,
         isLoggedIn,
         setLoggedIn,
+        chats,
+        setChats,
+        currentchatId,
+        setCurrentchatId,
+        messages,
+        setMessages,
+        loadAllChats
       }}
     >
       {!loading && children}

@@ -28,6 +28,8 @@ const configurePassport = ()=>{
         
         async(accessToken , refreshToken , profile,done)=>{
             try {
+
+                console.log('profile',profile)
                 const email = profile.emails[0].value;
                 let user = await User.findOne({email});
                 console.log('client',process.env.clientId)

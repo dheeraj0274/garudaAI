@@ -25,7 +25,7 @@ const Navbar = () => {
 
  const [selectLogo,setLogo]=useState(logo);
  const{openLogin}=useAuth();
- const {isLoggedIn , setLoggedIn,setUserDetails, userDetails}=useAuth();
+ const {isLoggedIn , setLoggedIn,setUserDetails, userDetails ,loadAllChats}=useAuth();
 
 const initials = userDetails?.name
   ?.split(' ')
@@ -39,6 +39,7 @@ const initials = userDetails?.name
       if(res.data.success){
             setUserDetails(null);
             setLoggedIn(false);
+            loadAllChats();
             
             
       }

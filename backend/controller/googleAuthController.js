@@ -1,5 +1,7 @@
 import dotenv from 'dotenv'
-dotenv.config({ path: './config/.env' })
+dotenv.config(
+    {path:  process.env.NODE_ENV==='production' ? "./config/.env.production" : "./config/.env.development"}
+)
 import passport from "passport";
 
 export const googleAuthCallback = (req, res, next) => {
@@ -16,8 +18,8 @@ export const googleAuthCallback = (req, res, next) => {
 
     res.cookie('token', token, {
       httpOnly: true,
-      sameSite: 'none',
-      secure:true,
+      sameSite: process.env.NODE_ENV==='production' ? "none":"lax",
+      secure:process.env.NODE_ENV==='production',
       maxAge: 24 * 60 * 60 * 1000,
     });
 
