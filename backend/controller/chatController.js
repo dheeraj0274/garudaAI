@@ -91,6 +91,7 @@ export const getAllChat= async(req,res)=>{
   const user = req.user._id;
   
   const  allChats = await chat.find({userId:user});
+  console.log('chats',allChats)
   
 
   res.status(200).json({
