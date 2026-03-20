@@ -14,6 +14,9 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 import axios from 'axios';
 import { useAuth } from '../context/authContext';
+import {useNavigate } from 'react-router-dom'
+
+const navigate = useNavigate()
 
 
 
@@ -49,7 +52,16 @@ const items = [
 
 const ESidebar = () => {
 
-  const{chats , setChats,messages , loadAllChats}=useAuth();
+const { chats, setChats, messages, loadAllChats, setCurrentchatId } = useAuth();
+const newChat = ()=>{
+  const res= axios.post('', {withCredentials:true});
+
+if(res.success){
+  navigate('/chat')
+  
+}
+
+}
   
 
 
@@ -64,14 +76,20 @@ useEffect(()=>{
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title} className='text-white text-[15px] '>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <SidebarMenuItem key={item._id}>
+  <SidebarMenuButton asChild>
+    <div
+      onClick={() => {
+        setCurrentchatId(item._id);
+        console.log('hi')
+        localStorage.setItem("chatid", item._id);
+      }}
+      className="text-gray-300 text-[14px] cursor-pointer"
+    >
+      {item.title}
+    </div>
+  </SidebarMenuButton>
+</SidebarMenuItem>
               ))}
             </SidebarMenu>
             <SidebarMenu className='mt-10 p-3'>
