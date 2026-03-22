@@ -14,6 +14,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 import axios from 'axios';
 import { useAuth } from '../context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -52,9 +53,40 @@ const items = [
 ]
 
 const ESidebar = () => {
+  const navigate=useNavigate();
  
 
 const { chats, setChats, messages, loadAllChats, setCurrentchatId } = useAuth();
+const newChat= async()=>{
+  const res = await axios.post('http://localhost:5000/chat/newchat',{} , {withCredentials:true});
+  if(res.data.success){
+    console.log('newchat');
+    console.log(res.data.chatId);
+    localStorage.setItem('chatid',res.data.chatId)
+    
+    
+    navigate('/chat')
+
+  }
+  else{
+    return;
+  }
+
+
+}
+
+const handleClick=(item)=>{
+  console.log(item);
+  
+  if(item === "New Chat"){
+    newChat()
+  
+  }
+  else{
+    return;
+  }
+
+}
 
 
 
@@ -69,14 +101,10 @@ useEffect(()=>{
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key= {item._id} >
+                <SidebarMenuItem key= {item.title} >
   <SidebarMenuButton asChild>
     <div
-      onClick={() => {
-        setCurrentchatId(item._id);
-        console.log('hi');
-        localStorage.setItem("chatid", item._id);
-      }}
+      onClick={()=>handleClick(item.title)}
       className="text-gray-300 text-[14px] cursor-pointer"
     >
       {item.title}

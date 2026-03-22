@@ -68,6 +68,8 @@ const Chat = () => {
       ]);
     
     } catch (error) {
+      console.log(error);
+      
       setMessages((prev) => [
         ...prev,
         { role: "model", text: "Sorry, couldn't get response." },
