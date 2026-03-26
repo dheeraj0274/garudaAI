@@ -79,13 +79,17 @@ const handleClick=(item)=>{
   console.log(item);
   
   if(item === "New Chat"){
-    newChat()
+    newChat();
   
   }
   else{
     return;
   }
 
+}
+const chatLoad=(id)=>{
+  console.log('chatid',id)
+  setCurrentchatId(id)
 }
 
 
@@ -124,7 +128,10 @@ useEffect(()=>{
                 {
                   chats?.map((item)=>(
                     <SidebarMenuItem key={item._id}>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton asChild
+                      onClick={()=>chatLoad(item._id)}
+                      
+                      >
                         <span className='text-gray-300 text-[14px] '>{item.title}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
