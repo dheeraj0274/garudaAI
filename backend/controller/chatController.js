@@ -2,6 +2,8 @@
 import { formateGemini } from "../utils/formatForGemini.js";
 import { geminiresponse } from "../services/gemini.js";
 import chat from "../config/models/chat.js";
+import mongoose from "mongoose";
+
 
 export const sendMessage = async (req, res) => {
   const { chatId, prompt } = req.body;
@@ -100,6 +102,50 @@ export const getAllChat= async(req,res)=>{
     message:'all chat sent successfully',
     allChats
   })
+
+
+}
+
+
+export const chatById =async(req,res)=>{
+   const chatid=req.params.id;
+                 const userId = req.user._id
+                 console.log('chatid',chatid);
+                 console.log(userId);
+                 
+                 
+
+  try {
+      const chats=await chat.findOne({
+                  _id:new mongoose.Types.ObjectId(chatid) ,
+                  userId:new mongoose.Types.ObjectId(userId)
+                 })
+                 console.log('chat',chats)
+
+                 if(!chats){
+                  return res.status(404).json({
+                    success:false,
+                    message:'chat not found'
+                  })
+
+                 }
+                 
+                 return res.status(200).json({
+                  success:true,
+                  chats
+                 })
+    
+  } catch (error) {
+    console.log(error.message)
+    return res.status(500).json({
+      success:'false',
+      error:error.message
+    })
+    
+  }
+                
+
+               
 
 
 }
