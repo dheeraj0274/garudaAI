@@ -66,7 +66,7 @@ const newChat= async()=>{
     
     
     navigate('/chat')
-
+     setCurrentchatId(res.data.chatId)
   }
   else{
     return;
