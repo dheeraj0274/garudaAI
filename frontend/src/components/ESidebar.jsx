@@ -58,7 +58,7 @@ const ESidebar = () => {
 
 const { chats, setChats, messages, loadAllChats, setCurrentchatId } = useAuth();
 const newChat= async()=>{
-  const res = await axios.post('http://localhost:5000/chat/newchat',{} , {withCredentials:true});
+  const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/chat/newchat`,{} , {withCredentials:true});
   if(res.data.success){
     console.log('newchat');
     console.log(res.data.chatId);
