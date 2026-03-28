@@ -29,10 +29,10 @@ function App() {
           
 <Routes>
  
-      <Route path="/" Component={Home}/>
-       <Route path="/chat" Component={Chat}/>
-       <Route path="/about" Component={About}/>
-       <Route path='/support' Component={Support} />
+      <Route path="/" element={<Home/>}/>
+       <Route path="/chat" element={<Chat/>}/>
+       <Route path="/about" element={<About/>}/>
+       <Route path='/support' element={<Support/>} />
  
          
 

@@ -14,7 +14,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 import axios from 'axios';
 import { useAuth } from '../context/authContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 
 
 
@@ -65,8 +65,9 @@ const newChat= async()=>{
     localStorage.setItem('chatid',res.data.chatId)
     
     
-    navigate('/chat')
+    
      setCurrentchatId(res.data.chatId)
+     navigate('chat')
   }
   else{
     return;
@@ -75,7 +76,8 @@ const newChat= async()=>{
 
 }
 
-const handleClick=(item)=>{
+const handleClick=(item,e)=>{
+ 
   console.log(item);
   
   if(item === "New Chat"){
@@ -90,6 +92,7 @@ const handleClick=(item)=>{
 const chatLoad=(id)=>{
   console.log('chatid',id)
   setCurrentchatId(id)
+  navigate('chat')
 }
 
 
