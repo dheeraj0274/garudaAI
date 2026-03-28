@@ -12,12 +12,14 @@ export const sendMessage = async (req, res) => {
   try {
     let userChat = await chat.findById(chatId);
     console.log('chat',userChat);
-    const title = prompt.slice(0.10);
+    const title = prompt.slice(0,10);
     
+
 
     if (!userChat) {
       userChat = await chat.create({ userId, messages: [] ,title });
     }
+    if(userChat.title==='New chat') await userChat.updateOne({title:title})
 
     userChat.messages.push({ role: "user", text: prompt });
 
