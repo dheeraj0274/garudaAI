@@ -336,6 +336,9 @@ const Chat = () => {
     div.addEventListener("scroll", handleScroll);
     return () => div.removeEventListener("scroll", handleScroll);
   }, []);
+  useEffect(() => {
+  setShowScrollBtn(false);
+}, [currentchatId]);
 
   useEffect(() => {
     const div = messagesRef.current;
@@ -356,31 +359,37 @@ const Chat = () => {
       behavior: "smooth",
     });
   };
+  
 
   return (
-    <div className="flex flex-col h-screen pt-[120px] bg-gray-900 text-white w-full">
+    <div className="flex flex-col h-screen pt-[120px] w-full bg-gray-900 text-white w-full">
      
       <div className="fixed">
         <SidebarTrigger />
       </div>
 
-      <div className="flex flex-col flex-1 pl-12 mt-7 mb-7 bg-gray-900 text-zinc-300 w-full p-4 overflow-hidden">
+      <div className="flex flex-col justify-center items-center pl-12 mt-7 mb-7 bg-gray-900 text-zinc-300 w-full p-4 overflow-hidden">
         
         
         <div
           ref={messagesRef}
-          className="flex-1 overflow-y-auto space-y-4 pr-2 pb-40"
+          className="flex-1 justify-center max-w-[80%] items-center overflow-y-auto space-y-4 pr-2 pb-40"
         >
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={`max-w-[70%] p-3 rounded-2xl ${
-                msg.role === "user"
-                  ? "ml-auto bg-gray-600"
-                  : "bg-gray-800"
-              }`}
+              className={`flex  max-w-[70%] ${msg.role==='user' ? 'justify-end' : 'justify-start'}`}
+              
             >
-              {msg.text}
+              <div
+              className={` p-2 px-4 rounded-xl break-words ${
+                msg.role === "user"
+                  ? "ml-auto bg-gray-700 text-white"
+                  : ""
+              }`}>
+                {msg.text}
+              </div>
+              
             </div>
           ))}
 
