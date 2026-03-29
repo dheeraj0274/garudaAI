@@ -39,7 +39,7 @@ const Home = () => {
               
               
             </div>
-          <div className="mt-7">
+          <div className="mt-8">
             
 
             <br />
