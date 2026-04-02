@@ -1,221 +1,3 @@
-
-
-
-// import { useState, useRef, useEffect } from "react";
-// import { Input } from "@/components/ui/input";
-// import { IoSend } from "react-icons/io5";
-// import { FaArrowCircleDown } from "react-icons/fa";
-// import { BeatLoader } from "react-spinners";
-// import { SidebarTrigger } from "../components/ui/sidebar";
-// import axios from "axios";
-// import { useAuth } from "../context/authContext";
-
-// const Chat = () => {
- 
-//   const [input, setInput] = useState("");
-//   const [loading, setLoading] = useState(false);
-//   const [showScrollBtn, setShowScrollBtn] = useState(false);
-
-//   const{chats,setChats , currentchatId  ,setCurrentchatId , messages,setMessages}=useAuth();
-
-//   const messagesRef = useRef(null);
-//   console.log('hit');
-
-  
-//   const sendPrompt = async (messageText) => {
-    
-    
-//     if (!messageText.trim()) return;
-
-//     setMessages((prev) => [...prev, { role: "user", text: messageText }]);
-//     setLoading(true);
-
-//     try {
-//       const res = await axios.post(
-//         `${import.meta.env.VITE_BACKEND_URL}/chat/prompt`,
-//         { prompt: messageText ,chatId:localStorage.getItem('chatid')},
-//         { withCredentials: true }
-//       );
-//       console.log(res);
-//       localStorage.setItem('chatid' , res.data.chatId);
-
-//       const newChatId  = res.data.chatId;
-
-//       if(newChatId != localStorage.getItem('chatid')){
-//         localStorage.setItem('chatid',newChatId)
-//       }
-
-//       setChats(prev=>{
-//         const existing = prev?.find((chat)=>chat._id===newChatId);     
-
-//         if(!existing) {return
-//         [...prev ,{
-//           _id:newChatId,
-//           title:messageText.slice(0,5),
-//           messages:[]
-//         }]
-//       }
-//         return prev;
-//       })
-//       setCurrentchatId(newChatId)
-      
-      
-      
-      
-//       setMessages((prev) => [
-//         ...prev,
-//         { role: "model", text: res.data.reply },  
-//       ]);
-    
-//     } catch (error) {
-//       console.log(error);
-      
-//       setMessages((prev) => [
-//         ...prev,
-//         { role: "model", text: "Sorry, couldn't get response." },
-//       ]);
-//     } finally {
-//       setLoading(false);
-//       setInput("");
-//     }
-//   };
-
-  
-//   useEffect(() => {
-//     const div = messagesRef.current;
-//     if (!div) return;
-
-//     const handleScroll = () => {
-//       const isAtBottom =
-//         div.scrollHeight - div.scrollTop <= div.clientHeight + 50;
-
-//       setShowScrollBtn(!isAtBottom);
-//     };
-
-//     div.addEventListener("scroll", handleScroll);
-//     return () => div.removeEventListener("scroll", handleScroll);
-//   }, []);
-
-
-//   useEffect(() => {
-//     if (!messages.length) return;
-
-//     const lastIndex = messages.length - 1;
-//     const lastMessage = messages[lastIndex];
-
-//     if (lastMessage.role === "user") {
-//       const element = document.getElementById(`msg-${lastIndex}`);
-
-//       element?.scrollIntoView({
-        
-//         behavior: "auto",
-//         block: "start",
-
-//       });
-//     }
-//   }, [messages]);
-
-//   const loadchatById= ()=>{
-
-//  const chatid=localStorage.getItem('chatid');
-      
-//   }
-
-//   const scrollToBottom = () => {
-//     const div = messagesRef.current;
-//     if (!div) return;
-
-//     div.scrollTo({
-//       top: div.scrollHeight,
-//       behavior: "smooth",
-//     });
-//   };
-
-//   return (
-//     <div className="flex flex-col h-screen pt-[120px] bg-gray-900 text-white w-full">
-      
-//       <div className="fixed">
-//         <SidebarTrigger />
-//       </div>
-
-    
-//       <div className="flex flex-col flex-1 pl-12 mt-7 mb-7 bg-gray-900 text-zinc-300 w-full p-4 overflow-hidden">
-        
-       
-//         <div
-//           ref={messagesRef}
-//           className="flex-1 overflow-y-auto space-y-4 pr-2 pb-40"
-//         >
-//           {messages.map((msg, i) => (
-//             <div
-//               key={i}
-//               id={`msg-${i}`}
-//               className={`max-w-[70%] p-3 rounded-2xl ${
-//                 msg.role === "user"
-//                   ? "ml-auto bg-gray-600"
-//                   : "bg-gray-800"
-//               }`}
-//             >
-//               {msg.text}
-//             </div>
-//           ))}
-
-//           {loading && (
-//             <div className="max-w-[70%] p-3 rounded-2xl bg-gray-700">
-//               <BeatLoader color="#9CA3AF" size={8} />
-//             </div>
-//           )}
-//         </div>
-//       </div>
-
-     
-//       {showScrollBtn && (
-//         <button
-//           onClick={scrollToBottom}
-//           className="fixed bottom-[120px] right-[40%]  text-white px-4 py-2 rounded-full shadow-lg"
-//         >
-//           <FaArrowCircleDown size={25} color="orange"/>
-//         </button>
-//       )}
-
-      
-//       <div className="fixed bottom-0 rounded-2xl w-[95%] md:w-[80%] h-[100px] backdrop-blur-md md:left-[17rem] border-gray-700 p-3">
-//         <div className="flex justify-center items-center flex-col w-full h-full">
-//           <div className="flex items-center justify-center gap-2 w-full">
-//             <Input
-//               value={input}
-//               onChange={(e) => setInput(e.target.value)}
-//               onKeyDown={(e) => {
-//                 if (e.key === "Enter") {
-//                   e.preventDefault();
-//                   sendPrompt(input);
-//                 }
-//               }}
-//               placeholder="Ask Garuda..."
-//               className="bg-gray-800 md:w-[80%] w-[430px] text-white border-0 focus-visible:ring-0 rounded-2xl p-3"
-//             />
-
-//             <IoSend
-//               size={24}
-//               className="cursor-pointer text-green-500"
-//               onClick={() => sendPrompt(input)}
-//             />
-//           </div>
-
-//           <div>
-//             <span className="font-light text-[12px]">
-//               Garuda can make mistakes. Check important info.
-//             </span>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Chat;
-
-
 import { useState, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { IoSend } from "react-icons/io5";
@@ -224,6 +6,7 @@ import { BeatLoader } from "react-spinners";
 import { SidebarTrigger } from "../components/ui/sidebar";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
+import MessageRenderer from "../components/MessageRenderer";
 
 const Chat = () => {
   const [input, setInput] = useState("");
@@ -241,7 +24,6 @@ const Chat = () => {
 
   const messagesRef = useRef(null);
 
-  
   useEffect(() => {
     const fetchChat = async () => {
       if (!currentchatId) return;
@@ -249,9 +31,9 @@ const Chat = () => {
       try {
         const res = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/chat/${currentchatId}`,
-          { withCredentials: true }
+          { withCredentials: true },
         );
-            console.log('res',res.data)
+        console.log("res", res.data);
         setMessages(res.data.chats.messages || []);
         localStorage.setItem("chatid", currentchatId);
       } catch (err) {
@@ -262,11 +44,9 @@ const Chat = () => {
     fetchChat();
   }, [currentchatId]);
 
- 
   const sendPrompt = async (messageText) => {
     if (!messageText.trim()) return;
 
-    
     setMessages((prev) => [...prev, { role: "user", text: messageText }]);
     setLoading(true);
 
@@ -275,19 +55,17 @@ const Chat = () => {
         `${import.meta.env.VITE_BACKEND_URL}/chat/prompt`,
         {
           prompt: messageText,
-          chatId: currentchatId, 
+          chatId: currentchatId,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       const newChatId = res.data.chatId;
 
-      
       if (!currentchatId) {
         setCurrentchatId(newChatId);
       }
 
-      
       setChats((prev) => {
         const exists = prev?.find((c) => c._id === newChatId);
 
@@ -303,11 +81,7 @@ const Chat = () => {
         return prev;
       });
 
-    
-      setMessages((prev) => [
-        ...prev,
-        { role: "model", text: res.data.reply },
-      ]);
+      setMessages((prev) => [...prev, { role: "model", text: res.data.reply }]);
     } catch (error) {
       console.log(error);
 
@@ -321,7 +95,6 @@ const Chat = () => {
     }
   };
 
-  
   useEffect(() => {
     const div = messagesRef.current;
     if (!div) return;
@@ -337,8 +110,8 @@ const Chat = () => {
     return () => div.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
-  setShowScrollBtn(false);
-}, [currentchatId]);
+    setShowScrollBtn(false);
+  }, [currentchatId]);
 
   useEffect(() => {
     const div = messagesRef.current;
@@ -359,18 +132,14 @@ const Chat = () => {
       behavior: "smooth",
     });
   };
-  
 
   return (
-    <div className="flex flex-col h-screen pt-[120px] w-full bg-gray-900 text-white w-full">
-     
+    <div className="flex flex-col  pt-[120px] w-full bg-gray-900 text-white w-full">
       <div className="fixed">
         <SidebarTrigger />
       </div>
 
       <div className="flex flex-col justify-center items-center pl-12 mt-7 mb-7 bg-gray-900 text-zinc-300 w-full p-4 overflow-hidden">
-        
-        
         <div
           ref={messagesRef}
           className="flex-1 justify-center max-w-[80%] items-center overflow-y-auto space-y-4 pr-2 pb-40"
@@ -378,18 +147,19 @@ const Chat = () => {
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={`flex  max-w-[70%] ${msg.role==='user' ? 'justify-end' : 'justify-start'}`}
-              
+              className={`flex  max-w-[70%] ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-              className={` p-2 px-4 rounded-xl break-words ${
-                msg.role === "user"
-                  ? "ml-auto bg-gray-700 text-white"
-                  : ""
-              }`}>
-                {msg.text}
+                className={` p-2 px-4 rounded-xl break-words ${
+                  msg.role === "user" ? "ml-auto bg-gray-700 text-white" : ""
+                }`}
+              >
+                {msg.role === "model" ? (
+                  <MessageRenderer text={msg.text} />
+                ) : (
+                  msg.text
+                )}
               </div>
-              
             </div>
           ))}
 
@@ -401,7 +171,6 @@ const Chat = () => {
         </div>
       </div>
 
-   
       {showScrollBtn && (
         <button
           onClick={scrollToBottom}
@@ -411,7 +180,6 @@ const Chat = () => {
         </button>
       )}
 
-      
       <div className="fixed bottom-0 rounded-2xl w-[95%] md:w-[80%] h-[100px] backdrop-blur-md md:left-[17rem] border-gray-700 p-3">
         <div className="flex justify-center items-center flex-col w-full h-full">
           <div className="flex items-center justify-center gap-2 w-full">
