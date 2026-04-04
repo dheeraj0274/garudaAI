@@ -139,15 +139,15 @@ const Chat = () => {
         <SidebarTrigger />
       </div>
 
-      <div className="flex flex-col justify-center items-center pl-12 mt-7 mb-7 bg-gray-900 text-zinc-300 w-full p-4 overflow-hidden">
+      <div className="flex flex-col justify-center items-center md:pl-12 mt-7 mb-7 bg-gray-900 text-zinc-300 w-full p-4 overflow-hidden">
         <div
           ref={messagesRef}
-          className="flex-1 justify-center max-w-[80%] items-center overflow-y-auto space-y-4 pr-2 pb-40"
+          className="flex-1 max-w-[100%] justify-center md:max-w-[80%] items-center overflow-y-auto space-y-4 pr-2 pb-40"
         >
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={`flex  max-w-[70%] ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex  md:max-w-[70%] ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
                 className={` p-2 px-4 rounded-xl break-words ${
