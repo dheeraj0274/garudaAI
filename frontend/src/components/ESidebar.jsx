@@ -15,6 +15,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import axios from 'axios';
 import { useAuth } from '../context/authContext';
 import { useNavigate ,Link} from 'react-router-dom';
+import { useSidebar } from './ui/sidebar';
 
 
 
@@ -57,6 +58,9 @@ const ESidebar = () => {
  
 
 const { chats, setChats, messages, loadAllChats, setCurrentchatId } = useAuth();
+
+const {setOpen,isMobile}=useSidebar()
+
 const newChat= async()=>{
   const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/chat/newchat`,{} , {withCredentials:true});
   if(res.data.success){
@@ -92,7 +96,11 @@ const handleClick=(item,e)=>{
 const chatLoad=(id)=>{
   console.log('chatid',id)
   setCurrentchatId(id)
-  navigate('chat')
+  navigate('chat');
+  if(isMobile){
+          setOpen(false)
+  }
+  
 }
 
 
