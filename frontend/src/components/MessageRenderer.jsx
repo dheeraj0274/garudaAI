@@ -22,10 +22,10 @@ const MessageRenderer = ({ text }) => {
           return (
             <div
               key={i}
-              className="bg-[#0d1117] rounded-xl overflow-hidden group"
+              className="bg-[#0d1117] rounded-xl w-[350px] md:w-fit overflow-hidden group"
             >
              
-              <div className="flex justify-between items-center px-3 py-1 bg-[#161b22] text-xs text-gray-400">
+              <div className="flex justify-between  items-center px-3 py-1 bg-[#161b22] text-xs text-gray-400">
                 <span>{part.language}</span>
 
                 <button
