@@ -44,32 +44,64 @@
 
 
 
-import {Resend} from 'resend'
+// import {Resend} from 'resend'
 
 
 
-const sendEmail=async({to , subject,text,html})=>{
-  // const mg = mailgun.client({username:'api', key:process.env.MAILGUN_API})
-   const resend = new Resend(process.env.RESEND_API);
+// const sendEmail=async({to , subject,text,html})=>{
+//   // const mg = mailgun.client({username:'api', key:process.env.MAILGUN_API})
+//    const resend = new Resend(process.env.RESEND_API);
 
-  try {
-       const msg =await resend.emails.send({
-          from:"onboarding@resend.dev",
-    to: to,
-    subject: subject,
+//   try {
+//        const msg =await resend.emails.send({
+//           from:"onboarding@resend.dev",
+//     to: to,
+//     subject: subject,
   
-    html: html
+//     html: html
 
-  })
+//   })
 
-  console.log('message',msg)
+//   console.log('message',msg)
 
 
-} catch (error) {
-  console.log('errror',error)
+// } catch (error) {
+//   console.log('errror',error)
   
-}
+// }
 
-}
+// }
 
-export default sendEmail;
+// export default sendEmail;
+
+
+import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
+
+const mailerSend = new MailerSend({
+    apiKey: process.env.MAIL_API_KEY,
+});
+
+const sentFrom = new Sender("info@domain.com", "Your name");
+
+const recipients = [
+    new Recipient("recipient@email.com", "Your Client")
+];
+
+const personalization = [
+  {
+    email: "recipient@email.com",
+    data: {
+      OTP_CODE: ''
+    },
+  }
+];
+
+const emailParams = new EmailParams()
+    .setFrom(sentFrom)
+    .setTo(recipients)
+    .setReplyTo(sentFrom)
+    .setSubject("This is a Subject")
+    .setTemplateId('3zxk54v0p0qgjy6v')
+    .setPersonalization(personalization);
+
+await mailerSend.email.send(emailParams);
