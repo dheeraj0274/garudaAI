@@ -33,7 +33,7 @@ console.log("PASS:", process.env.GOOGLE_APP_PASSWORD);
 
     console.log("✅ Email sent to:", to);
   } catch (error) {
-    console.error("ERROR", error.message);
+    console.error("ERROR", error);
     throw new Error('email sending failed')
   
   }
