@@ -4,15 +4,12 @@ import nodemailer from 'nodemailer'
 const sendEmail = async({to,subject,html})=>{
     
 const transporter = nodemailer.createTransport({
- 
-   host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.GOOGLE_APP_PASSWORD,
-  }
+  },
+  connectionTimeout: 20000, 
 });
 
 
@@ -22,7 +19,7 @@ console.log("PASS:", process.env.GOOGLE_APP_PASSWORD);
     
        try {
         console.log(to , subject , html);
-        await transporter.verify();
+        // await transporter.verify();
         
     await transporter.sendMail({
       from: `GARUDA-AI <${process.env.EMAIL_USER}>`,
@@ -31,7 +28,7 @@ console.log("PASS:", process.env.GOOGLE_APP_PASSWORD);
       html,
     });
 
-    console.log("✅ Email sent to:", to);
+    console.log("Email sent to:", to);
   } catch (error) {
     console.error("ERROR", error);
     throw new Error('email sending failed')
