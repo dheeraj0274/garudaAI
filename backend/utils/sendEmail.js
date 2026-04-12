@@ -1,46 +1,46 @@
-// import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer'
 
 
-// const sendEmail = async({to,subject,html})=>{
+const sendEmail = async({to,subject,html})=>{
     
-// const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
  
-//    host: "smtp.gmail.com",
-//   port: 465,
-//   secure: true,
+   host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
 
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.GOOGLE_APP_PASSWORD,
-//   }
-// });
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.GOOGLE_APP_PASSWORD,
+  }
+});
 
 
-//     console.log("EMAIL:", process.env.EMAIL_USER);
-// console.log("PASS:", process.env.GOOGLE_APP_PASSWORD);
+    console.log("EMAIL:", process.env.EMAIL_USER);
+console.log("PASS:", process.env.GOOGLE_APP_PASSWORD);
 
     
-//        try {
-//         console.log(to , subject , html);
-//         await transporter.verify();
+       try {
+        console.log(to , subject , html);
+        await transporter.verify();
         
-//     await transporter.sendMail({
-//       from: `GARUDA-AI <${process.env.EMAIL_USER}>`,
-//       to,
-//       subject,
-//       html,
-//     });
+    await transporter.sendMail({
+      from: `GARUDA-AI <${process.env.EMAIL_USER}>`,
+      to,
+      subject,
+      html,
+    });
 
-//     console.log("✅ Email sent to:", to);
-//   } catch (error) {
-//     console.error("ERROR", error.message);
-//     throw new Error('email sending failed')
+    console.log("✅ Email sent to:", to);
+  } catch (error) {
+    console.error("ERROR", error.message);
+    throw new Error('email sending failed')
   
-//   }
+  }
     
-// }
+}
 
-// export default sendEmail;
+export default sendEmail;
 
 
 
@@ -75,33 +75,55 @@
 // export default sendEmail;
 
 
-import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
+// import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
-const mailerSend = new MailerSend({
-    apiKey: process.env.MAIL_API_KEY,
-});
 
-const sentFrom = new Sender("info@domain.com", "Your name");
 
-const recipients = [
-    new Recipient("recipient@email.com", "Your Client")
-];
 
-const personalization = [
-  {
-    email: "recipient@email.com",
-    data: {
-      OTP_CODE: ''
-    },
-  }
-];
+// const sendEmail =async(email,otp)=>{
+//   const mailerSend = new MailerSend({
+//     apiKey: process.env.MAIL_API_KEY,
+// });
 
-const emailParams = new EmailParams()
-    .setFrom(sentFrom)
-    .setTo(recipients)
-    .setReplyTo(sentFrom)
-    .setSubject("This is a Subject")
-    .setTemplateId('3zxk54v0p0qgjy6v')
-    .setPersonalization(personalization);
+// const sentFrom = new Sender("dy911848@gmail.com", "GARUD-AI");
 
-await mailerSend.email.send(emailParams);
+// const recipients = [
+//     new Recipient(email, "User")
+// ];
+
+// const personalization = [
+//   {
+//     email: email,
+//     data: {
+//       OTP_CODE:otp
+//     },
+//   }
+// ];
+
+
+
+
+//   try {
+//     const emailParams = new EmailParams()
+//     .setFrom(sentFrom)
+//     .setTo(recipients)
+//     .setReplyTo(sentFrom)
+//     .setSubject("This is a Subject")
+//     .setTemplateId('3zxk54v0p0qgjy6v')
+//     .setPersonalization(personalization);
+
+//     await mailerSend.email.send(emailParams);
+//     console.log('Email sent')
+
+  
+
+
+
+    
+//   } catch (error) {
+//     console.log('error',error)
+//     throw new Error('email sending failed')
+//   }
+// }
+
+// export default sendEmail;
