@@ -25,6 +25,7 @@ export const sendOtp = async (req, res) => {
       otp: userOTP,
       expiresAt: Date.now() + 5 * 60 * 1000,
     });
+     
 
     // const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -50,13 +51,14 @@ export const sendOtp = async (req, res) => {
 
       message: "OTP  sent",
     });
-
-     sendEmail({
+    sendEmail({
       to: email,
       subject: "Your Otp for verification",
       html: `<h2>Your otp is ${userOTP}</h2><br><p>Valid for 5 minutes</p>`,
       
     }).catch(console.error);
+
+     
   } catch (error) {
     res.status(500).json({
       success: false,

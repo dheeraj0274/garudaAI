@@ -1,75 +1,75 @@
-import nodemailer from 'nodemailer'
+// import nodemailer from 'nodemailer'
 
 
-const sendEmail = async({to,subject,html})=>{
+// const sendEmail = async({to,subject,html})=>{
     
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.GOOGLE_APP_PASSWORD,
-  },
-  connectionTimeout: 20000, 
-});
+// const transporter = nodemailer.createTransport({
+//     host: "smtp-relay.brevo.com",
+//     port: 587,
+//     secure: false,
+//     auth: {
+//       user: 'dy911848@gmail.com',   
+//       pass: process.env.BREVO_SMTP_KEY, 
+//     },
+//   });
 
 
-    console.log("EMAIL:", process.env.EMAIL_USER);
-console.log("PASS:", process.env.GOOGLE_APP_PASSWORD);
+  
 
     
-       try {
-        console.log(to , subject , html);
-        // await transporter.verify();
-        
-    await transporter.sendMail({
-      from: `GARUDA-AI <${process.env.EMAIL_USER}>`,
-      to,
-      subject,
-      html,
-    });
+//        try {
+//         console.log(to , subject , html);
+//         // await transporter.verify();
+//         console.log('EMAIL CALLLED')
+//     await transporter.sendMail({
+//       from: `GARUDA-AI <${process.env.BREVO_LOGIN}>`,
+//       to,
+//       subject,
+//       html,
+//     });
 
-    console.log("Email sent to:", to);
-  } catch (error) {
-    console.error("ERROR", error);
-    throw new Error('email sending failed')
+//     console.log("Email sent to:", to);
+//   } catch (error) {
+//     console.error("ERROR", error);
+//     throw new Error('email sending failed')
   
-  }
+//   }
     
-}
-
-export default sendEmail;
-
-
-
-// import {Resend} from 'resend'
-
-
-
-// const sendEmail=async({to , subject,text,html})=>{
-//   // const mg = mailgun.client({username:'api', key:process.env.MAILGUN_API})
-//    const resend = new Resend(process.env.RESEND_API);
-
-//   try {
-//        const msg =await resend.emails.send({
-//           from:"onboarding@resend.dev",
-//     to: to,
-//     subject: subject,
-  
-//     html: html
-
-//   })
-
-//   console.log('message',msg)
-
-
-// } catch (error) {
-//   console.log('errror',error)
-  
-// }
-
 // }
 
 // export default sendEmail;
+
+
+
+import {Resend} from 'resend'
+
+
+
+const sendEmail=async({to , subject,text,html})=>{
+  // const mg = mailgun.client({username:'api', key:process.env.MAILGUN_API})
+   const resend = new Resend(process.env.RESEND_API);
+
+  try {
+       const msg =await resend.emails.send({
+          from:"onboarding@resend.dev",
+    to: to,
+    subject: subject,
+  
+    html: html
+
+  })
+
+  console.log('message',msg)
+
+
+} catch (error) {
+  console.log('errror',error)
+  
+}
+
+}
+
+export default sendEmail;
 
 
 // import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
