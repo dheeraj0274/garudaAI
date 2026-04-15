@@ -80,17 +80,30 @@ const newChat= async()=>{
 
 }
 
+const Settings =()=>{
+  
+
+}
+
 const handleClick=(item,e)=>{
  
   console.log(item);
   
-  if(item === "New Chat"){
-    newChat();
   
-  }
-  else{
-    return;
-  }
+ switch(item){
+       case "New Chat": 
+                 newChat();
+                break;
+      case 'Settings' :
+        Settings();
+        break;
+
+        default: return;
+        
+        
+
+       
+ }
 
 }
 const chatLoad=(id)=>{
