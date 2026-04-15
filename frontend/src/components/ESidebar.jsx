@@ -16,6 +16,7 @@ import axios from 'axios';
 import { useAuth } from '../context/authContext';
 import { useNavigate ,Link} from 'react-router-dom';
 import { useSidebar } from './ui/sidebar';
+import Setting from './Setting.jsx'
 
 
 
@@ -57,7 +58,7 @@ const ESidebar = () => {
   const navigate=useNavigate();
  
 
-const { chats, setChats, messages, loadAllChats, setCurrentchatId } = useAuth();
+const { chats, setChats, messages, loadAllChats, setCurrentchatId , openSetting,setOpenSetting } = useAuth();
 
 const {setOpen,isMobile}=useSidebar()
 
@@ -80,10 +81,7 @@ const newChat= async()=>{
 
 }
 
-const Settings =()=>{
-  
 
-}
 
 const handleClick=(item,e)=>{
  
@@ -95,7 +93,7 @@ const handleClick=(item,e)=>{
                  newChat();
                 break;
       case 'Settings' :
-        Settings();
+        setOpenSetting(true)
         break;
 
         default: return;
@@ -167,6 +165,7 @@ useEffect(()=>{
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      {openSetting && <Setting close={()=>setOpenSetting(false)}/>}
     </Sidebar>
   )
 }

@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(null);
+  const [openSetting,setOpenSetting]=useState(false);
 
   const openLogin = () => setShowLogin(true);
   const closeLogin = () => setShowLogin(false);
@@ -89,7 +90,9 @@ try {
         setCurrentchatId,
         messages,
         setMessages,
-        loadAllChats
+        loadAllChats,
+        openSetting,
+        setOpenSetting
       }}
     >
       {!loading && children}
