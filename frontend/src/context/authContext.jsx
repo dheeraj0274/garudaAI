@@ -22,6 +22,9 @@ export const AuthProvider = ({ children }) => {
   ]);
 
  
+
+
+ 
   const fetchUser = async () => {
     try {
       const res = await axios.get(
@@ -41,10 +44,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    fetchUser();
-   
-  }, []);
+ useEffect(()=>{
+  fetchUser()
+ },[])
+ 
+
+ 
 
 console.log(userDetails);
 const loadAllChats= async()=>{

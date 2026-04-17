@@ -149,9 +149,9 @@ useEffect(()=>{
                 
                 {
                   chats?.map((item)=>(
-                    <SidebarMenuItem key={item._id}>
+                    <SidebarMenuItem key={item?._id}>
                       <SidebarMenuButton asChild
-                      onClick={()=>chatLoad(item._id)}
+                      onClick={()=>chatLoad(item?._id)}
                       
                       >
                         <span className='text-gray-300 text-[14px] '>{item.title}</span>
