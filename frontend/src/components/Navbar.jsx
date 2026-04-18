@@ -40,6 +40,7 @@ const initials = userDetails?.name
             setUserDetails(null);
             setLoggedIn(false);
             loadAllChats();
+            localStorage.removeItem('loggedIn')
             
             
       }

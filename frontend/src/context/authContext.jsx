@@ -45,7 +45,15 @@ export const AuthProvider = ({ children }) => {
   };
 
  useEffect(()=>{
-  fetchUser()
+  const  isLogged=localStorage.getItem('loggedIn')
+  if(isLogged){
+    fetchUser()
+  }
+  else {
+    setLoading(false)
+  }
+
+  
  },[])
  
 

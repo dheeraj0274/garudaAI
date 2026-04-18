@@ -58,6 +58,7 @@ const Login = () => {
       
       setUserDetails(res.data.user);
       setLoggedIn(true);
+      localStorage.setItem('loggedIn','true')
     }
     } catch (error) {
             if (error.response?.status === 409) {
@@ -77,6 +78,7 @@ const Login = () => {
   }
 const googleLogin = () => {
  window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/auth/google?prompt=select_account`;
+ localStorage.setItem('loggedIn' , true)
 };
 
   if (!showLogin) return null;
