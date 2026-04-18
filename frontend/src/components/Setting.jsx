@@ -32,32 +32,32 @@ import { IoIosSettings ,
 const setting_icons=[
   {
     title:'General',
-    icon:<IoIosSettings/>
+    icon:<IoIosSettings size={15}/>
 
   },
     {
     title:'Notification',
-    icon:<IoNotificationsSharp/>
+    icon:<IoNotificationsSharp size={15}/>
 
   },
     {
     title:'Personalization',
-    icon:<FaFaceGrin/>
+    icon:<FaFaceGrin size={15}/>
 
   },
      {
     title:'Data Control',
-    icon:<BsDatabaseFillGear/>
+    icon:<BsDatabaseFillGear size={15}/>
 
   },
     {
     title:'Security',
-    icon:<IoKey/>
+    icon:<IoKey size={15}/>
 
   },
     {
     title:'Account',
-    icon:<IoMdAddCircleOutline/>
+    icon:<IoMdAddCircleOutline size={15}/>
 
   },
   
@@ -77,27 +77,26 @@ const Settings = ({ close }) => {
      
       <div className="fixed inset-0 flex items-center justify-center z-50 ">
         
-        <div className=" text-white w-[80%] md:w-[50%]  h-[60%]  rounded-2xl   relative">
+        <div className=" text-white w-[80%] md:w-[50%]  md:h-[60%] h-[45%]  rounded-2xl   relative">
           <div className="flex w-full h-full  ">
 
           {/* Right-setting-container */}
 
-             <div className="bg-gray-800 w-[30%] rounded-l-xl p-3 ">
+             <div className="bg-gray-800 w-[30%] rounded-l-xl p-2 md:p-3   ">
               <div className=" hover:bg-gray-500 cursor-pointer max-w-fit rounded-[2px] ">
-                  <IoClose  onClick={close} size={22} />
+                  <IoClose  onClick={close} size={20} />
               </div>
 
 
-
               {/* sidebar */}
-              <div className="flex flex-col gap-2 mt-11">
+              <div className="flex flex-col gap-2 md:mt-11 mt-5">
                 {
                   setting_icons.map((item)=>(
                    
 
-                    <div className="flex  items-center gap-2 p-2 hover:bg-gray-700 rounded-xl cursor-pointer">
+                    <div className="flex  items-center gap-2 md:p-2 hover:bg-gray-700 rounded-xl cursor-pointer">
                       <span>{item?.icon}</span>
-                      <span className="text-[13px]">{item?.title}</span>
+                      <span className="text-[8px] md:text-[13px]">{item?.title}</span>
 
 
                       </div>
