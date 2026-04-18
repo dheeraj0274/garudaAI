@@ -58,7 +58,7 @@ const ESidebar = () => {
   const navigate=useNavigate();
  
 
-const { chats, setChats, messages, loadAllChats, setCurrentchatId , openSetting,setOpenSetting } = useAuth();
+const { chats, setChats, messages, loadAllChats, setCurrentchatId , openSetting,setOpenSetting,setLoading } = useAuth();
 
 const {setOpen,isMobile}=useSidebar()
 
@@ -117,7 +117,14 @@ const chatLoad=(id)=>{
 
 
 useEffect(()=>{
-  loadAllChats()
+  if(localStorage.getItem('loggedIn')){
+    loadAllChats()
+  }
+  else{
+    setLoading(false)
+    
+  }
+  
 },[messages])
   return (
     <Sidebar className='mt-15  h-[calc(100vh-60px)] '>
