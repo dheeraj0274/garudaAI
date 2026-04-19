@@ -13,7 +13,8 @@ import { IoIosSettings ,
   import { FaFaceGrin } from "react-icons/fa6";
   import { IoKey } from "react-icons/io5";
   import { IoNotificationsSharp } from "react-icons/io5";
-
+  
+ 
 
     import {
   Sidebar,
@@ -70,7 +71,7 @@ const setting_icons=[
 
 const Settings = ({ close }) => {
 
-  const [activeTab,setActiveTab]=useState('')
+  const [activeTab,setActiveTab]=useState('General')
 
 
   const handleClick=(e)=>{
@@ -101,7 +102,7 @@ const Settings = ({ close }) => {
                 break;
 
 
-            default: break;
+            default: <General/>;
           }
   }
   return (
@@ -152,7 +153,7 @@ const Settings = ({ close }) => {
 
 
          {/* right setting container */}
-          <div className="bg-zinc-800 w-[70%] rounded-r-xl">
+          <div className="bg-zinc-900 w-[70%] rounded-r-xl">
             {renderContent()}
 
           </div>
