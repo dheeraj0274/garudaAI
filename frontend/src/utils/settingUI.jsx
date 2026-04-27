@@ -48,7 +48,7 @@ const General = () => {
         name:"default" , 
         value: colorData[0].value
     })
-
+   
 
   return (
     <div className="w-full p-5">
@@ -228,7 +228,7 @@ const Notification = () => {
           <DropdownMenuContent className='bg-zinc-700 border-none'>
             <DropdownMenuGroup className='text-white font-light '>
               
-              <DropdownMenuItem className='hover:bg-zinc-900' > 
+              <DropdownMenuItem   className='hover:bg-zinc-900' > 
                       <Toggle checked={u_push} onChange={setUPush} />
                       Push
                       
