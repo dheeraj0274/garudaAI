@@ -80,13 +80,19 @@ const Settings = ({ close }) => {
 
   }
 
+ 
+    
+     
+  
+   
+
   const renderContent=()=>{
           switch(activeTab){
             case 'General':
-              return <General/>
+              return <General />
               break;
             case 'Notification':
-                return <Notification/>
+                return <Notification />
                 break;
                  case 'Personalization':
                 return <Personalization/>
