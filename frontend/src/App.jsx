@@ -11,12 +11,16 @@ import ESidebar from './components/ESidebar.jsx'
 import Chat from './pages/Chat.jsx'
 import About from './components/About.jsx'
 import Support from './components/Support.jsx'
+import { SettingProvider } from './context/settingContext.jsx'
 function App() {
  
 
   return (
     <Router>
       <AuthProvider>
+        <SettingProvider>
+
+       
 
       
         <Navbar/>
@@ -43,6 +47,7 @@ function App() {
          </SidebarProvider>
       
       </div>
+       </SettingProvider>
      </AuthProvider>
    
     </Router>
