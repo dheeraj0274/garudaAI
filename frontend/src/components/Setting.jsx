@@ -27,7 +27,7 @@ import { IoIosSettings ,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-import {General , Notification ,DataControl, Personalization,Security,Account} from '../utils/settingUI'
+import {General , Notification ,DataControl, Personalization,Security,Account} from '../utils/settingUI.jsx'
 import { useState } from "react";
 
 
@@ -79,6 +79,8 @@ const Settings = ({ close }) => {
 
 
   }
+  console.log(activeTab);
+  
 
  
     
