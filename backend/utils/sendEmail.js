@@ -1,43 +1,4 @@
-// import nodemailer from 'nodemailer'
 
-
-// const sendEmail = async({to,subject,html})=>{
-    
-// const transporter = nodemailer.createTransport({
-//     host: "smtp-relay.brevo.com",
-//     port: 587,
-//     secure: false,
-//     auth: {
-//       user: 'dy911848@gmail.com',   
-//       pass: process.env.BREVO_SMTP_KEY, 
-//     },
-//   });
-
-
-  
-
-    
-//        try {
-//         console.log(to , subject , html);
-//         // await transporter.verify();
-//         console.log('EMAIL CALLLED')
-//     await transporter.sendMail({
-//       from: `GARUDA-AI <${process.env.BREVO_LOGIN}>`,
-//       to,
-//       subject,
-//       html,
-//     });
-
-//     console.log("Email sent to:", to);
-//   } catch (error) {
-//     console.error("ERROR", error);
-//     throw new Error('email sending failed')
-  
-//   }
-    
-// }
-
-// export default sendEmail;
 
 
 
