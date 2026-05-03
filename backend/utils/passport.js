@@ -8,6 +8,9 @@ import passport from 'passport'
 import {Strategy as GoogleStratgy} from 'passport-google-oauth20'
 import User from '../config/models/User.js'
 import { signToken } from './authutiils.js'
+import sendEmail from '../utils/sendEmail.js';
+import path from 'path'
+import fs from 'fs';
 
 
 const configurePassport = ()=>{
@@ -40,14 +43,24 @@ const configurePassport = ()=>{
                     })
                 }
                 if(!user){
+                     let templatePath = path.join(process.cwd()  ,'utils', 'congrats.html');
+                     let welcome=fs.readFileSync(templatePath , 'utf-8');
+
+                     welcome=welcome.replace("{{name}}" , profile.displayName)
                     user = await User.create({
                         name:profile.displayName,
                         email,
                         googleId:profile.id,
                         authProvider:'google'
                     })
-                }
+                    sendEmail({
+                        to:email,
+                        subject:'Welcome to Garuda-AI',
+                        html:welcome
+                    }).catch(console.error)
 
+                }
+                const name = profile.displayName;
                 const token = signToken(user._id);
                 return done(null , {user,token})
 

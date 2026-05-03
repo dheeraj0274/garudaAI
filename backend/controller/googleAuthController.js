@@ -4,6 +4,7 @@ dotenv.config(
 )
 import passport from "passport";
 
+
 export const googleAuthCallback = (req, res, next) => {
   passport.authenticate('google', { session: false }, (err, data) => {
 
@@ -12,7 +13,7 @@ export const googleAuthCallback = (req, res, next) => {
       return res.redirect(`${process.env.FRONTEND_URL}/login?error=google`);
     }
 
-    const { token, user } = data;
+    const { token, user , name } = data;
 
     console.log("Generated Token:", token);  
 
@@ -22,6 +23,9 @@ export const googleAuthCallback = (req, res, next) => {
       secure:process.env.NODE_ENV==='production',
       maxAge: 24 * 60 * 60 * 1000,
     });
+
+
+   
 
     return res.redirect(`${process.env.FRONTEND_URL}/`);
   })(req, res, next);
