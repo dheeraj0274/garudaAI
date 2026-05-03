@@ -22,6 +22,7 @@ import axios from "axios";
 
 
 const Navbar = () => {
+  console.log('rerender')
 
  const [selectLogo,setLogo]=useState(logo);
  const{openLogin}=useAuth();
