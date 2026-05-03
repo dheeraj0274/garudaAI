@@ -4,6 +4,16 @@ import otp from "../config/models/otp.js";
 import { signToken } from "../utils/authutiils.js";
 import sendEmail from "../utils/sendEmail.js";
 
+
+import fs from "fs";
+import path from "path";
+
+
+
+
+
+
+
 export const sendOtp = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -18,14 +28,23 @@ export const sendOtp = async (req, res) => {
     await otp.deleteMany({ email });
 
     const userOTP = Math.floor(1000 + Math.random() * 9000).toString();
-    console.log("otp", userOTP);
+   
 
     await otp.create({
       email,
       otp: userOTP,
       expiresAt: Date.now() + 5 * 60 * 1000,
     });
-     
+       const templatePath = path.join(process.cwd(), "utils", "mail.html");
+
+    let html = fs.readFileSync(templatePath, "utf-8");
+    html = html.replace("{{OTP}}", userOTP);
+    sendEmail({
+      to: email,
+      subject: "Your Otp for verification",
+      html:html,
+      
+    }).catch(console.error);
 
     // const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -51,12 +70,8 @@ export const sendOtp = async (req, res) => {
 
       message: "OTP  sent",
     });
-    sendEmail({
-      to: email,
-      subject: "Your Otp for verification",
-      html: `<h2>Your otp is ${userOTP}</h2><br><p>Valid for 5 minutes</p>`,
-      
-    }).catch(console.error);
+
+  
 
      
   } catch (error) {
