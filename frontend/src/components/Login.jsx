@@ -53,7 +53,7 @@ const Login = () => {
         email:form.email,
         password:form.password
       } , {withCredentials:true});
-
+         console.log(res.data)
     if(res.data.success){
       toast.success(res.data.message);
      
@@ -61,6 +61,9 @@ const Login = () => {
       setUserDetails(res.data.user);
       setLoggedIn(true);
       localStorage.setItem('loggedIn','true')
+    }
+    else{
+      toast.warn(res.data.message)
     }
     } catch (error) {
             if (error.response?.status === 409) {
