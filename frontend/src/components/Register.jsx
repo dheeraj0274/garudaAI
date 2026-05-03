@@ -20,6 +20,7 @@ import logo from "../assets/LogoCrop.jpeg";
 import {flushSync} from 'react-dom'
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 import {
   InputOTP,
   InputOTPGroup,
@@ -53,7 +54,7 @@ const Register = () => {
     
 
     if(!form.name || !form.email || !form.password){
-      alert('please enter all value');
+      toast.warn('please enter all value' );
       return
     }
     try {
@@ -69,19 +70,20 @@ const Register = () => {
 console.log(res.data)
   if(res.data.success){
    if (res.data.success) {
-  console.log("BEFORE setOtp");
-  setUserOtp('')
+    toast.success(res.data.message)
+  
+  
   
     setOtp(true)
     
   
   
-  console.log("AFTER setOtp");
+ 
 }
   }
 
   else{
-    alert(res.data.message)
+    toast.warn(res.data.message)
 
   }
     
@@ -91,7 +93,7 @@ console.log(res.data)
   
       
     } catch (error) {
-      alert(error.message||'otp-failed')
+      toast.error(error.message||'otp-failed')
       
     }
     finally{
@@ -110,7 +112,7 @@ console.log(res.data)
     try {
       
     if(!userOtp.length==4){
-      alert('please enter otp')
+      toast.warn('please enter otp')
       return
     }
     setLoading(true)
@@ -125,7 +127,7 @@ console.log(res.data)
     })
 
     if(res.data.success){
-      alert(res.data.message);
+      toast.success(res.data.message);
       setOtp(false);
     closeLogin()
     }
@@ -136,7 +138,7 @@ console.log(res.data)
     
       
     } catch (error) {
-      alert(error.message)
+      toast.error(error.message)
       
     }
     finally{

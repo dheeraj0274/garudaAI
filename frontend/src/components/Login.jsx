@@ -20,12 +20,14 @@ import { useState } from "react";
 import { useAuth } from "../context/authContext";
 import Register from "./Register";
 import axios from "axios";
+  import { toast } from "react-toastify";
 
 const Login = () => {
   const { closeLogin } = useAuth();
   const { showLogin  , isLoggedIn ,setLoggedIn} = useAuth();
   const { showReg, setShowReg } = useAuth();
   const {loading  ,setLoading}=useAuth();
+
 
   const {setUserDetails}=useAuth();
 
@@ -42,7 +44,7 @@ const Login = () => {
     
 
     if(!form.email ||!form.password){
-      alert('Enter all value')
+      toast.warn('Enter all value')
     }
 
     try {
@@ -53,8 +55,8 @@ const Login = () => {
       } , {withCredentials:true});
 
     if(res.data.success){
-      alert(res.data.message);
-      console.log('user',res.data);
+      toast.success(res.data.message);
+     
       
       setUserDetails(res.data.user);
       setLoggedIn(true);
@@ -62,9 +64,9 @@ const Login = () => {
     }
     } catch (error) {
             if (error.response?.status === 409) {
-    alert(error.response.data.message);
+    toast.error(error.response.data.message);
   }  else {
-    alert('Server not reachable or network error');
+    toast.error('Server not reachable or network error');
     console.error(error);
   }
       
@@ -78,7 +80,7 @@ const Login = () => {
   }
 const googleLogin = () => {
  window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/auth/google?prompt=select_account`;
- localStorage.setItem('loggedIn' , true)
+ 
 };
 
   if (!showLogin) return null;

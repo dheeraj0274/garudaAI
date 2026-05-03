@@ -2,7 +2,16 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+.Toastify__toast {
+  font-weight: 500 !important;
+  border-radius: 8px !important;
+  background: black !important;
+  color: white !important;
+}
 
+.Toastify__toast-body {
+  color: white !important;
+}
  @layer base {
   body {
     font-family: 'Inter Variable', system-ui, sans-serif;
@@ -21,7 +30,7 @@
   --primary: 222.2 47.4% 11.2%;
   --input: 214.3 31.8% 91.4%;
   --background: 0 0% 100%;
-} */
+} */a
  :root {
   --border: 214.3 31.8% 91.4%;
   --input: 214.3 31.8% 91.4%;

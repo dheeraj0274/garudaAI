@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import "react-toastify/dist/ReactToastify.css";
 
 import { BrowserRouter as Router , Routes ,Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
@@ -12,6 +13,9 @@ import Chat from './pages/Chat.jsx'
 import About from './components/About.jsx'
 import Support from './components/Support.jsx'
 import { SettingProvider } from './context/settingContext.jsx'
+
+import {ToastContainer} from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 function App() {
  
 
@@ -30,6 +34,11 @@ function App() {
        
          <SidebarProvider >
           <ESidebar/>
+          <div className='font-semibold  '>
+               <ToastContainer position='top-center'  />
+
+          </div>
+       
           
 <Routes>
  
