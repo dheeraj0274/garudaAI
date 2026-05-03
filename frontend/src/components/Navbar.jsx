@@ -19,7 +19,7 @@ import { IoGiftOutline } from "react-icons/io5";
 
 import {useAuth} from '../context/authContext'
 import axios from "axios";
-
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   console.log('rerender')
@@ -38,15 +38,18 @@ const initials = userDetails?.name
     try {
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout` , {withCredentials:true});
       if(res.data.success){
+        localStorage.removeItem('loggedIn')
+        toast.error('Logged-out')
             setUserDetails(null);
             setLoggedIn(false);
+           
             loadAllChats();
-            localStorage.removeItem('loggedIn')
+            
             
             
       }
     } catch (error) {
-      alert(error.message)
+      toast.error(error.message)
       
     }
   }

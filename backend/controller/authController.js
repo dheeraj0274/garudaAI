@@ -68,7 +68,7 @@ export const sendOtp = async (req, res) => {
     res.status(200).json({
       success: true,
 
-      message: "OTP  sent",
+      message: "OTP sent successfully!",
     });
 
   
@@ -132,7 +132,7 @@ export const verifyOtpAndRegister = async (req, res) => {
     res.status(201).json({
       success:true,
       savedUser,
-      message:'user registered successfully'
+      message:'User registered successfully'
     })
     
 
