@@ -17,6 +17,8 @@ import { GrFormClose } from "react-icons/gr";
 import logo from "../assets/LogoCrop.jpeg";
 
 
+import {flushSync} from 'react-dom'
+
 import { useState } from "react";
 import {
   InputOTP,
@@ -38,7 +40,7 @@ const Register = () => {
 
   const {loading , setLoading , setLoggedIn}=useAuth();
 
-  const[userOtp ,setUserOtp]=useState();
+  const[userOtp ,setUserOtp]=useState("");
   const [form ,setForm]=useState({
     name:'',
     email:'',
@@ -64,13 +66,29 @@ const Register = () => {
      } , 
     {withCredentials:true}
   )
-
+console.log(res.data)
   if(res.data.success){
-    console.log(res.data);
-    alert(res.data.message);
-     setOtp(true);
-     setLoggedIn(true);
+   if (res.data.success) {
+  console.log("BEFORE setOtp");
+  setUserOtp('')
+  
+    setOtp(true)
+    
+  
+  
+  console.log("AFTER setOtp");
+}
   }
+
+  else{
+    alert(res.data.message)
+
+  }
+    
+    
+     
+    
+  
       
     } catch (error) {
       alert(error.message||'otp-failed')
@@ -107,14 +125,15 @@ const Register = () => {
     })
 
     if(res.data.success){
-      alert(res.data.message)
+      alert(res.data.message);
+      setOtp(false);
+    closeLogin()
     }
 
 
 
 
-    setOtp(false);
-    closeLogin()
+    
       
     } catch (error) {
       alert(error.message)
@@ -193,12 +212,12 @@ const Register = () => {
 
             <div className="flex flex-col w-full">
               <div className=" flex  w-full h-full items-center justify-center gap-1 ">
-                {otp ? 
+                {otp &&(
                 <div className="flex flex-col items-center gap-2">
                 
                   <InputOTP
                   value={userOtp}
-                  onChange={(e)=>setUserOtp(e)} 
+                  onChange={(val)=>setUserOtp(val)} 
                   maxLength={4}>
                     <InputOTPGroup className='text-white gap-1'>
                       <InputOTPSlot index={0} />
@@ -214,7 +233,7 @@ const Register = () => {
                   </InputOTP>
                   <span className="text-gray-400 text-[12px]">Otp sent to the email</span>
                   </div>
-                : null}
+                )}
                  
               </div>
               <Button
@@ -244,3 +263,5 @@ const Register = () => {
 };
 
 export default Register;
+
+
