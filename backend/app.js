@@ -11,7 +11,7 @@ app.set("trust proxy", 1);
 
 app.use(express.json());
 const coreOptions={
-    origin:["https://garuda-ai-one.vercel.app","http://localhost:5173",'https://www.garuda.help' , 'https://garuda.help'],
+    origin:["https://garuda-ai-one.vercel.app", "https://api.garuda.help","http://localhost:5173",'https://www.garuda.help' , 'https://garuda.help'],
     credentials:true
    
 }
