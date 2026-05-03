@@ -128,6 +128,16 @@ export const verifyOtpAndRegister = async (req, res) => {
       maxAge:24*60*60*1000
 
     })
+      const templatePath = path.join(process.cwd(), "utils", "congrats.html");
+      let welcome = fs.readFileSync(templatePath, "utf-8");
+      welcome=welcome.replace("{{name}}" , name)
+
+         sendEmail({
+      to: email,
+      subject: "Welcom eto Garuda-AI",
+      html:welcome
+      
+    }).catch(console.error);
 
     res.status(201).json({
       success:true,
