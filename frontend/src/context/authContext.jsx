@@ -68,7 +68,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const value = useMemo(() => {
+  const value = 
+  useMemo(
+   () => {
     return {
       showLogin,
       openLogin,
@@ -90,8 +92,9 @@ export const AuthProvider = ({ children }) => {
       loadAllChats,
       openSetting,
       setOpenSetting,
-    };
-  }, [
+    }
+  }
+  , [
     showLogin,
     showReg,
     loading,
@@ -105,7 +108,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {children}
+      { children}
     </AuthContext.Provider>
   );
 };
