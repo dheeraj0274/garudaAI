@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import ESidebar from "../components/ESidebar";
 
 import { CiCirclePlus } from "react-icons/ci";
@@ -9,6 +9,14 @@ import { MdOutlineKeyboardVoice } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 
 import { useNavigate } from "react-router-dom";
+
+import { animate, stagger } from "motion";
+
+
+const text = "A new standard of research";
+const header = "Garuda-AI"
+
+
 
 
 
@@ -26,6 +34,48 @@ const Home = () => {
     });
 
    }
+     useEffect(() => {
+     
+    }
+  , []);
+  useEffect(() => {
+
+    //header-animation-part
+    const letters = document.querySelectorAll(".fall-char");
+
+
+
+    animate(
+      letters,
+      {
+        transform: ["translateY(-60px)", "translateY(0px)"],
+        opacity: [0, 1],
+      },
+      {
+        duration: 1,
+        delay: stagger(0.08),
+        easing: "ease-out",
+      }
+      
+    );
+
+    //text-animation-part
+     setTimeout(() => {
+          const elements = document.querySelectorAll(".char");
+
+    animate(
+      elements,
+      { opacity: [0, 1], transform: ["translateY(10px)", "translateY(0px)"] },
+      {
+        duration: 0.7,
+        delay: stagger(0.05),
+      }
+    );
+  
+        
+      }, 1500);
+  }, []);
+
 
   return (
     <div className="flex flex-row mt-15 p-4  bg-gray-800 w-full">
@@ -43,9 +93,18 @@ const Home = () => {
             
 
             <br />
- <span className="font-bold text-yellow-600 tracking-wide text-4xl">GARUDA AI </span>
+              <span className="font-bold text-yellow-600 tracking-wide text-4xl">
+               {header.split('').map((char,index)=>(
+                <span key={index} className="fall-char inline-block opacity-0">{char ===' ' ? '\u00a0' : char}</span>
+              ))} </span>
             <br />
-            <p className="font-mono md:text-5xl text-2xl text-zinc-300 ">A new standard of Reasearch</p>
+            <p 
+            
+            className="font-mono md:text-5xl text-xl mt-2 text-zinc-300 ">
+              {text.split('').map((char,index)=>(
+                <span key={index} className="char inline-block opacity-0">{char ===' ' ? '\u00a0' : char}</span>
+              ))}
+            </p>
           </div>
           <div className="mt-8 rounded-2xl flex flex-col items-center justify-center  border border-lime-500 w-[90%] md:w-[50%] h-[120px]  ">
             <div className=" w-[90%] h-[80%] pt-2">
