@@ -27,7 +27,7 @@ export const googleAuthCallback = (req, res, next) => {
 
    
 
-    return res.redirect(`${process.env.FRONTEND_URL}/`);
+    return res.redirect(`${process.env.FRONTEND_URL}/auth-success`);
   })(req, res, next);
 };
 
