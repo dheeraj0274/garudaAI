@@ -18,6 +18,7 @@ export const geminiresponse = async (chatHistory) => {
   });
 
   const reply = result.candidates[0].content.parts[0].text;
+  console.log('reply',reply)
   return reply;
 
 
