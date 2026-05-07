@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import "react-toastify/dist/ReactToastify.css";
 
-import { BrowserRouter as Router , Routes ,Route } from 'react-router-dom'
+import { BrowserRouter as Router , Routes ,Route , useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import  Home  from './pages/Home.jsx'
 import './index.css'
@@ -16,24 +16,29 @@ import { SettingProvider } from './context/settingContext.jsx'
 
 import {ToastContainer} from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
-function App() {
- 
+import AuthSuccess from './utils/AuthSuccess.jsx';
 
-  return (
-    <Router>
-      <AuthProvider>
-        <SettingProvider>
 
-       
 
-      
-        <Navbar/>
+
+function AppLayout(){
+   const location = useLocation();
+
+
+  const hideLayout = location.pathname ==='/auth-success';
+
+
+
+
+  return <>
+
+  {!hideLayout&& <Navbar/>}
         <Login/>
       <div className='min-h-screen flex flex-col' >
         
        
          <SidebarProvider >
-          <ESidebar/>
+          {!hideLayout && <ESidebar/>}
           <div className='font-semibold  '>
                <ToastContainer position='top-center'  />
 
@@ -46,6 +51,7 @@ function App() {
        <Route path="/chat" element={<Chat/>}/>
        <Route path="/about" element={<About/>}/>
        <Route path='/support' element={<Support/>} />
+       <Route path='/auth-success' element={<AuthSuccess/>} />
  
          
 
@@ -56,6 +62,27 @@ function App() {
          </SidebarProvider>
       
       </div>
+  </>
+
+}
+function App() {
+
+
+ 
+
+
+
+ 
+
+  return (
+    <Router>
+      <AuthProvider>
+        <SettingProvider>
+
+       
+        <AppLayout/>
+      
+       
        </SettingProvider>
      </AuthProvider>
    
