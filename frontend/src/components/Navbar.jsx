@@ -63,7 +63,7 @@ const initials = userDetails?.name
     <div className="fixed w-full border-b shadow-md">
 
     
-    <div className="flex w-full h-[60px] p-2 justify-around bg-gray-800 items-center">
+    <div className="flex w-full h-[60px] p-2 justify-around  items-center bg-zinc-900">
       {/* logo-section*/}
       <div className="">
         
@@ -145,7 +145,7 @@ const initials = userDetails?.name
   <AvatarFallback className='text-white' >{initials}</AvatarFallback>
 </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className='mr-1 bg-gray-600  border-none mt-5'>
+          <DropdownMenuContent className='mr-1 bg-zinc-700  border-none mt-5'>
             <DropdownMenuLabel className='text-gray-100 font-semibold'>Profile</DropdownMenuLabel>
            
             <DropdownMenuSeparator />

@@ -134,24 +134,29 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col  pt-[120px] w-full bg-gray-900 text-white w-full">
+    <div className="flex flex-col  pt-[120px] w-full bg-zinc-800 text-white w-full">
       <div className="fixed">
         <SidebarTrigger />
       </div>
 
-      <div className="flex flex-col justify-center items-center md:pl-12 mt-7 mb-7 bg-gray-900 text-zinc-300 w-full p-4 overflow-hidden">
+      <div className="flex flex-col justify-center items-center md:pl-12 mt-7 mb-7 bg-zinc-800 text-zinc-300 w-full p-4 overflow-hidden">
         <div
           ref={messagesRef}
-          className="flex-1 max-w-[100%] justify-center md:max-w-[80%] items-center overflow-y-auto space-y-4 pr-2 pb-40"
+          className="flex-1 max-w-full justify-center  md:max-w-[90%] items-center overflow-y-auto space-y-4 pr-2 pb-40"
         >
+        
+
+         
           {messages.map((msg, i) => (
+
             <div
               key={i}
-              className={`flex  md:max-w-[70%] ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex justify-center items-center  md:max-w-full  ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
+                <div className="flex flex-col justify-center items-center">
               <div
-                className={` p-2 px-4 rounded-xl break-words ${
-                  msg.role === "user" ? "ml-auto bg-gray-700 text-white" : ""
+                className={` p-2 px-4 rounded-xl wrap-break-words ${
+                  msg.role === "user" ? "ml-auto bg-zinc-700 text-white" : ""
                 }`}
               >
                 {msg.role === "model" ? (
@@ -161,7 +166,9 @@ const Chat = () => {
                 )}
               </div>
             </div>
+               </div>
           ))}
+        
 
           {loading && (
             <div className="max-w-[70%] p-3 rounded-2xl bg-gray-700">
@@ -193,7 +200,7 @@ const Chat = () => {
                 }
               }}
               placeholder="Ask Garuda..."
-              className="bg-gray-800 md:w-[80%] w-[430px] text-white border-0 rounded-2xl p-3"
+              className="bg-zinc-700 md:w-[80%] w-[430px] text-white border-0 rounded-2xl p-3"
             />
 
             <IoSend

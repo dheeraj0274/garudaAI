@@ -151,7 +151,7 @@ console.log(res.data)
   return (
     <div className="fixed inset-0  bg-black/40 backdrop-blur-sm z-40">
       <div className="flex justify-center flex-col items-center h-full w-full">
-        <Card className="w-65 h-110 bg-gray-800 outline-none border-none p-0">
+        <Card className="w-65 h-110 bg-zinc-800 outline-none border-none p-0">
           <CardHeader className="text-center ">
             <div className="flex justify-end items-center pt-4 h-1 cursor-pointer">
               <GrFormClose color="red" onClick={closeLogin} />

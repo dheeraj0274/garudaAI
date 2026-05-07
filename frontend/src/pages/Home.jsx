@@ -78,7 +78,7 @@ const Home = () => {
 
 
   return (
-    <div className="flex flex-row mt-15 p-4  bg-gray-800 w-full">
+    <div className="flex flex-row mt-15 p-4 bg-black   w-full">
       {/* <ESidebar /> */}
       <div >
         <SidebarTrigger className="text-white " />

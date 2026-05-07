@@ -128,7 +128,7 @@ useEffect(()=>{
 },[messages])
   return (
     <Sidebar className='mt-15  h-[calc(100vh-60px)] '>
-      <SidebarContent className='bg-gray-900'>
+      <SidebarContent className='bg-zinc-800'>
         <SidebarGroup>
           <SidebarGroupLabel className='text-[15px] font-bold text-gray-300' >Garauda AI</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -138,7 +138,7 @@ useEffect(()=>{
   <SidebarMenuButton asChild>
     <div
       onClick={()=>handleClick(item.title)}
-      className="text-gray-300 text-[14px] cursor-pointer"
+      className="text-gray-300 text-[14px] cursor-pointer hover:bg-zinc-700"
     >
       {item.title}
     </div>
@@ -161,7 +161,7 @@ useEffect(()=>{
                       onClick={()=>chatLoad(item?._id)}
                       
                       >
-                        <span className='text-gray-300 text-[14px] '>{item.title}</span>
+                        <span className='text-gray-300 text-[14px] hover:bg-zinc-700 cursor-pointer '>{item.title}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
 
