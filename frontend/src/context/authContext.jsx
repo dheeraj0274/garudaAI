@@ -29,6 +29,8 @@ export const AuthProvider = ({ children }) => {
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/me`,
         { withCredentials: true }
       );
+
+
       if(res.data.success) {toast.success('Logged-In')
 
       setUserDetails(res.data.User || null);
@@ -47,6 +49,7 @@ export const AuthProvider = ({ children }) => {
 
     if (!isLogged) {
       fetchUser();
+      loadAllChats()
     } else {
       setLoading(false);
     }
@@ -60,7 +63,7 @@ export const AuthProvider = ({ children }) => {
         {},
         { withCredentials: true }
       );
-
+   console.log('chats',res.data)
       setChats(res.data.allChats || []);
     } catch (error) {
       console.log("chat error", error);
