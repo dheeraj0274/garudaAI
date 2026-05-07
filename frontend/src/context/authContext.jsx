@@ -4,6 +4,8 @@ import { createContext, useContext, useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -22,6 +24,11 @@ export const AuthProvider = ({ children }) => {
 
   const openLogin = () => setShowLogin(true);
   const closeLogin = () => setShowLogin(false);
+
+
+
+
+  
 
   const fetchUser = async () => {
     try {
@@ -47,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const isLogged = localStorage.getItem("loggedIn");
 
-    if (!isLogged) {
+    if (isLogged) {
       fetchUser();
       loadAllChats()
     } else {
