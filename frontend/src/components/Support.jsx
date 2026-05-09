@@ -4,7 +4,7 @@ import { SidebarTrigger } from "./ui/sidebar";
 
 const Support = () => {
   return (
-    <div className="min-h-screen bg-[#0f172a] text-gray-200 px-6 py-16">
+    <div className="min-h-screen bg-zinc-800 text-gray-200 px-6 py-16">
       <div className="max-w-full mx-auto">
           <SidebarTrigger className='text-white '/>
 
@@ -34,7 +34,7 @@ const Support = () => {
           </h2>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="bg-[#111827] border border-gray-800 rounded-xl p-6">
+            <div className="bg-[#323234] border border-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-semibold text-yellow-200 mb-2">
                 Frequently Asked Questions
               </h3>
@@ -44,7 +44,7 @@ const Support = () => {
               </p>
             </div>
 
-            <div className="bg-[#111827] border border-gray-800 rounded-xl p-6">
+            <div className="bg-[#323234] border border-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-semibold text-yellow-200 mb-2">
                 Report a Problem
               </h3>
@@ -54,7 +54,7 @@ const Support = () => {
               </p>
             </div>
 
-            <div className="bg-[#111827] border border-gray-800 rounded-xl p-6">
+            <div className="bg-[#323234] border border-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-semibold text-yellow-200 mb-2">
                 Feature Requests
               </h3>
@@ -64,7 +64,7 @@ const Support = () => {
               </p>
             </div>
 
-            <div className="bg-[#111827] border border-gray-800 rounded-xl p-6">
+            <div className="bg-[#323234] border border-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-semibold text-yellow-200 mb-2">
                 Privacy & Security
               </h3>
@@ -85,7 +85,7 @@ const Support = () => {
             support channel. We aim to respond as quickly as possible.
           </p>
 
-          <div className="bg-[#111827] border border-gray-800 rounded-xl p-6">
+          <div className="bg-[#1e1e1f] border border-gray-800 rounded-xl p-6">
             <p className="text-gray-300">
                Email:{" "}
               <span className="text-yellow-400">

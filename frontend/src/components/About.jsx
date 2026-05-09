@@ -3,7 +3,7 @@ import { SidebarTrigger } from "../components/ui/sidebar";
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-[#0f172a] text-gray-200 px-6 py-16">
+    <div className="min-h-screen bg-zinc-800 text-gray-200 px-6 py-16">
       <div className="max-w-full mx-auto">
         <div className="fixed">
                <SidebarTrigger className='text-white '/>
