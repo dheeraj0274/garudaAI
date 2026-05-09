@@ -180,7 +180,7 @@ const initials = userDetails?.name
         <IoGiftOutline className={isLoggedIn ? 'block' : 'hidden'} size={25} color='yellow'/>
 
 
-        <Button className={isLoggedIn ? 'hidden' : 'bg-purple-400 ml-1 text-white h-[30px] w-[50px]'}  onClick={openLogin}>Login</Button>
+        <Button className={isLoggedIn ? 'hidden' : 'bg-orange-400 ml-1 text-white h-[30px] w-[50px]'}  onClick={openLogin}>Login</Button>
   
       </div>
     </div>
