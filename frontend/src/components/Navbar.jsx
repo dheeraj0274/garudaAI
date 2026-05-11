@@ -54,16 +54,30 @@ const initials = userDetails?.name
     }
   }
 
+const modeColors = {
+  student: "",
+  creator: "bg-red-800",
+  finance: "bg-sky-900",
+};
+
+const [mode, setMode] = useState("student");
+
+const changemode=(mode)=>{
+  setMode(mode)
+toast.success(` ${mode} mode`)
+}
+
+
  
 
-
+console.log(modeColors[mode])
 
 
   return (
     <div className="fixed w-full border-b shadow-md">
 
     
-    <div className="flex w-full h-[60px] p-2 justify-around  items-center bg-zinc-900">
+    <div className={` ${modeColors[mode]} flex w-full h-[60px] p-2 justify-around  items-center bg-gray-900` }>
       {/* logo-section*/}
       <div className="">
         
@@ -77,21 +91,22 @@ const initials = userDetails?.name
             <DropdownMenuSeparator />
 
 
-            <DropdownMenuItem className='hover:bg-gray-500' onClick={()=>setLogo(logo)}>  <img className="rounded-3xl" src={logo}
+            <DropdownMenuItem className='hover:bg-gray-500'
+             onClick={()=>{setLogo(logo) ; changemode("student")}}>  <img className="rounded-3xl" src={logo}
              alt="logo" width={35}  />
              
               <span className="text-[12px] font-semibold pl-1 text-zinc-300">Student</span></DropdownMenuItem>
             
             
             
-            <DropdownMenuItem className='hover:bg-gray-500' onClick={()=>setLogo(logo2)}>
+            <DropdownMenuItem className='hover:bg-gray-500' onClick={()=>{setLogo(logo2) ; changemode("finance")}}>
                  <img className="rounded-3xl" src={logo2}
              alt="logo" width={35} />
                 <span className="pl-1 text-[12px] font-semibold text-zinc-300">Finance</span></DropdownMenuItem>
             
             
             
-            <DropdownMenuItem className='hover:bg-gray-500' onClick={()=>setLogo(logo3)}>
+            <DropdownMenuItem className='hover:bg-gray-500' onClick={()=>{setLogo(logo3) ; changemode("creator")}}>
                  <img className="rounded-3xl" src={logo3}
              alt="logo" width={35} />
                 <span className="font-semibold text-[12px] pl-1 text-zinc-300">Creator</span></DropdownMenuItem>
