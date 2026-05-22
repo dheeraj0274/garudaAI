@@ -4,6 +4,7 @@ import chatRoutes from './Routes/chatRoutes.js'
 import passport from 'passport'
 import cookieParser from 'cookie-parser';
 import configurePassport from './utils/passport.js';
+import settingRoutes from './Routes/settingRoutes.js'
 import cors from 'cors'
 const app = express();
 app.set("trust proxy", 1);
@@ -31,6 +32,7 @@ app.get('/',(req,res)=>{
 
 app.use('/chat',chatRoutes)
 app.use('/api/auth',authRoutes);
+app.use('/api',settingRoutes)
 
 
 
