@@ -1,4 +1,4 @@
-import setting from '../config/models/setting.js';
+import Setting from '../config/models/setting.js';
 
 
 
@@ -9,10 +9,10 @@ export const settingStored = async (req,res)=>{
     const user = req.user;
 
     try {
-           const isSetting = await setting.findOne(user)
+           let isSetting = await Setting.findOne(user)
 
     if(!isSetting) {
-      isSetting =   await setting.create({userId:user});
+      isSetting =   await Setting.create({userId:user});
     } 
 
     changes.forEach((item)=> isSetting[item.key]=item.value)
@@ -20,7 +20,7 @@ export const settingStored = async (req,res)=>{
 
     res.status(200).json({
       success: true,
-      setting: userSetting
+      setting: isSetting
     });
 
         
