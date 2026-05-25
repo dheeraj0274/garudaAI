@@ -2,25 +2,23 @@ import Setting from '../config/models/setting.js';
 
 
 
-export const settingStored = async (req,res)=>{
-    const changes = req.body;
+export const updateSettings = async (req,res)=>{
+  
 
 
     const user = req.user;
 
     try {
-           let isSetting = await Setting.findOne(user._id)
-
-    if(!isSetting) {
-      isSetting =   await Setting.create({userId:user._id});
-    } 
-
-    changes.forEach((item)=> isSetting[item.key]=item.value)
-    await isSetting.save();
+ 
+           const updated = await Setting.findOneAndUpdate(
+            {userId:user},
+            {settings:req.body.settings},
+            {new:true, upsert:true}
+           )
 
     res.status(200).json({
       success: true,
-      setting: isSetting
+      setting: updated
     });
 
         
