@@ -6,9 +6,10 @@ const settingSchema = new mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
-        require:true
+        required:true
     },
-    appearence:{
+    settings:{
+           appearence:{
         type:String,
         enum:['Dark' , 'Light' , 'System'],
         default:'System'
@@ -26,6 +27,17 @@ const settingSchema = new mongoose.Schema({
         enum:['Default' , 'Pink' ,'Green' , 'Purple','Yellow'],
         default:'Default'
     },
+
+    notifications:{
+         push:Boolean,
+    email:Boolean,
+    u_push:Boolean,
+    u_email:Boolean
+
+    }
+
+    }
+ 
     
 } , {timestamps:true})
 
