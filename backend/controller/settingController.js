@@ -1,80 +1,140 @@
-import Setting from '../config/models/setting.js';
+import Setting from "../config/models/setting.js";
 
+// export const updateSettings = async (req,res)=>{
 
+//     const user = req.user;
+//     const{generalSetting , notification} = req.body
 
-export const updateSettings = async (req,res)=>{
-  
+//     console.log(req.body.settings)
+//     const setting = await Setting.findOne({userId:req.user._id})
+//     console.log('user' , setting)
 
+//     try {const setting = await Setting.findOne({
+//   userId: req.user._id,
+// });
 
-    const user = req.user;
+// setting.generalSetting = generalSetting;
 
-    try {
- 
-           const updated = await Setting.findOneAndUpdate(
-            {userId:user},
-            {settings:req.body.settings},
-            {new:true, upsert:true}
-           )
+// await setting.save();
 
-    res.status(200).json({
-      success: true,
-      setting: updated
-    });
+// console.log(setting.generalSetting);
+//            const updated = await Setting.findOneAndUpdate(
+//             {userId:user._id},
+//             {
+//               $set:{
+//                 generalSetting , notification
+//             }},
 
-        
-    } catch (error) {
+//             {new:true,   runValidators: true``}
+//            )
+//            console.log('updated',updated)
 
-        return res.status(500).json({
-            success:true,
-            error:error.message
-        })
-        
-    }
+//     res.status(200).json({
+//       success: true,
+//       setting: updated
+//     });
 
- 
-    
+//     } catch (error) {
 
+//         return res.status(500).json({
+//             success:true,
+//             error:error.message
+//         })
 
+//     }
 
-
-
-}
-
-export const fetchSetting = async(req,res)=>{
-    const user = req.user;
-    console.log(user)
-
-
+export const updateSettings = async (req, res) => {
   try {
-   
+    const { settings } = req.body;
+    console.log('get',settings);
 
-   const userSetting = await Setting.findOne({userId:user._id})
+    const updated=await Setting.findOneAndUpdate(
+      { userId: req.user._id },
+      {
+        $set: {
+          generalsettings:settings.generalSetting,
+          notifications:settings.generalnotification
+        },
+      },
+      { new: true },
+    );
 
-   if(!userSetting) {
-    await Setting.create({userId:user._id})
-    return res.status(201).json({
-      success:true,
-      message:"setting created"
-    })
-
-   } 
-   else{
     return res.status(200).json({
-    success:true,
-    message:"sent settings",
-    userSetting
-   })
-
-   }
-   
-    
+      success: true,
+      setting:updated,
+    });
   } catch (error) {
     return res.status(500).json({
-      success:false,
-      error:error.message
-    })
-    
+      success: false,
+      error: error.message,
+    });
   }
-  
+};
 
-}
+// }
+
+// export const fetchSetting = async(req,res)=>{
+//     const user = req.user;
+//     console.log(user)
+
+//   try {
+
+//    const userSetting = await Setting.findOne({userId:user._id})
+
+//    if(!userSetting) {
+//     await Setting.create({userId:user._id})
+
+//    }
+
+//    const generalSetting = {
+//       appearance:userSetting.settings.appearance,
+//       contrast: userSetting.settings.contrast,
+//       accColor: userSetting.settings.accColor,
+
+//    }
+
+//    const notifications = userSetting.settings.notifications
+//    console.log('noti',notifications)
+
+//     return res.status(200).json({
+//     success:true,
+//     message:"sent settings",
+//     generalSetting,
+//     notifications
+//    })
+
+//   } catch (error) {
+//     return res.status(500).json({
+//       success:false,
+//       error:error.message
+//     })
+
+//   }
+
+// }
+
+export const fetchSetting = async (req, res) => {
+  try {
+    let userSetting = await Setting.findOne({
+      userId: req.user._id,
+    });
+
+    if (!userSetting) {
+      userSetting = await Setting.create({
+        userId: req.user._id,
+      });
+    }
+    console.log(userSetting);
+
+    return res.status(200).json({
+      success: true,
+      generalSetting: userSetting.generalsettings,
+      notification: userSetting.notifications,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
