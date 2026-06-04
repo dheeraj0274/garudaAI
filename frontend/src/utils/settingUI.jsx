@@ -37,7 +37,7 @@ const General = () => {
                 variant="outline"
                 className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
               >
-                {generalSetting.theme} <RiArrowDropDownLine size={30} />
+                {generalSetting?.theme} <RiArrowDropDownLine size={30} />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-zinc-700 border-none">
@@ -81,7 +81,7 @@ const General = () => {
                 variant="outline"
                 className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
               >
-                {generalSetting.contrast} <RiArrowDropDownLine size={30} />
+                {generalSetting?.contrast} <RiArrowDropDownLine size={30} />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-zinc-700 border-none">
@@ -134,9 +134,9 @@ const General = () => {
                 className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
               >
                 <span
-                  className={`w-2 h-2 rounded-full ${generalSetting.accColor.value}`}
+                  className={`w-2 h-2 rounded-full ${generalSetting?.accColor?.value}`}
                 ></span>
-                {generalSetting.accColor.name} <RiArrowDropDownLine size={30} />
+                {generalSetting?.accColor?.name} <RiArrowDropDownLine size={30} />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-zinc-700 border-none">
@@ -165,13 +165,13 @@ const General = () => {
                   <DropdownMenuItem
                     className="hover:bg-zinc-900"
                     onClick={() =>
-                      setGeneralSetting((prev) => ({ ...prev, accColor: item }))
+                      setGeneralSettings((prev) => ({ ...prev, accColor: item }))
                     }
                   >
                     <span
-                      className={`w-2 h-2 rounded-full ${item.value}`}
+                      className={`w-2 h-2 rounded-full ${item?.value}`}
                     ></span>
-                    {item.name}
+                    {item?.name}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuGroup>
@@ -203,7 +203,7 @@ const Notification = () => {
                 variant="outline"
                 className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
               >
-                {notification.push ? "Push" : "Off"}
+                {notification?.push ? "Push" : "Off"}
                 <RiArrowDropDownLine size={30} />
               </Button>
             </DropdownMenuTrigger>
@@ -211,7 +211,7 @@ const Notification = () => {
               <DropdownMenuGroup className="text-white font-light ">
                 <DropdownMenuItem className="hover:bg-zinc-900">
                   <Toggle
-                    checked={notification.push}
+                    checked={notification?.push}
                     onChange={(val) =>
                       setNotification((prev) => ({ ...prev, push: val }))
                     }
@@ -234,7 +234,7 @@ const Notification = () => {
                 variant="outline"
                 className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
               >
-                {notification.email ? "Email" : "Off"}
+                {notification?.email ? "Email" : "Off"}
                 <RiArrowDropDownLine size={30} />
               </Button>
             </DropdownMenuTrigger>
@@ -242,12 +242,12 @@ const Notification = () => {
               <DropdownMenuGroup className="text-white font-light ">
                 <DropdownMenuItem className="hover:bg-zinc-900">
                   <Toggle
-                    checked={notification.email}
+                    checked={notification?.email}
                     onChange={(val) =>
                       setNotification((prev) => ({ ...prev, email: val }))
                     }
                   />
-                  {notification.email ? "Email" : "Off"}
+                  {notification?.email ? "Email" : "Off"}
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
@@ -263,8 +263,8 @@ const Notification = () => {
                 variant="outline"
                 className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px] flex "
               >
-                {notification.u_push ? "Push " : "Off "},
-                {notification.u_email ? " Email" : " Off"}
+                {notification?.u_push ? "Push " : "Off "},
+                {notification?.u_email ? " Email" : " Off"}
                 <RiArrowDropDownLine size={30} />
               </Button>
             </DropdownMenuTrigger>
@@ -272,7 +272,7 @@ const Notification = () => {
               <DropdownMenuGroup className="text-white font-light ">
                 <DropdownMenuItem className="hover:bg-zinc-900">
                   <Toggle
-                    checked={notification.u_push}
+                    checked={notification?.u_push}
                     onChange={(val) =>
                       setNotification((prev) => ({ ...prev, u_push: val }))
                     }
@@ -281,7 +281,7 @@ const Notification = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem className="hover:bg-zinc-900">
                   <Toggle
-                    checked={notification.u_email}
+                    checked={notification?.u_email}
                     onChange={(val) =>
                       setNotification((prev) => ({ ...prev, u_email: val }))
                     }

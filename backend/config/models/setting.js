@@ -1,46 +1,61 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const settingSchema = new mongoose.Schema({
-
-
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
-        required:true
-    },
-    settings:{
-           appearence:{
-        type:String,
-        enum:['Dark' , 'Light' , 'System'],
-        default:'System'
-
-
-
-    },
-    contrast:{
-        type:String,
-        enum:['System' , 'Medium' , 'High'],
-        default:'System'
-    },
-    accColor:{
-        type:String,
-        enum:['Default' , 'Pink' ,'Green' , 'Purple','Yellow'],
-        default:'Default'
+const settingSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
 
-    notifications:{
-         push:Boolean,
-    email:Boolean,
-    u_push:Boolean,
-    u_email:Boolean
+    generalsettings: {
+      theme: {
+        type: String,
+        enum: ["Dark", "Light", "System"],
+        default: "System",
+      },
 
-    }
+      contrast: {
+        type: String,
+        enum: ["System", "Medium", "High"],
+        default: "System",
+      },
 
-    }
- 
-    
-} , {timestamps:true})
+      accColor: {
+        type: String,
+        enum: ["Default", "Pink", "Green", "Purple", "Yellow"],
+        default: "Default",
+      },
 
-const Setting = mongoose.model('Setting' , settingSchema)
+  
+    },
+        notifications: {
+        push: {
+          type: Boolean,
+          default: true,
+        },
 
-export  default Setting;
+        email: {
+          type: Boolean,
+          default: false,
+        },
+
+        u_push: {
+          type: Boolean,
+          default: true,
+        },
+
+        u_email: {
+          type: Boolean,
+          default: false,
+        },
+      },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Setting = mongoose.model("Setting", settingSchema);
+
+export default Setting;
