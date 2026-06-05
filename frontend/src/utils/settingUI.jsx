@@ -372,13 +372,144 @@ const Personalization = () => {
   );
 };
 const DataControl = () => {
-  return <div>Data Control</div>;
+  return (
+    <div className="w-full p-5">
+      <div className="border-b pb-3 pt-2">
+        <span>Data Controls</span>
+      </div>
+
+      <div className="mt-3">
+        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
+          <div>
+            <span className="font-extralight">Chat History</span>
+            <p className="text-[11px] font-thin">
+              Save conversations for future reference
+            </p>
+          </div>
+
+          <Toggle />
+        </div>
+
+        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
+          <div>
+            <span className="font-extralight">Training Data</span>
+            <p className="text-[11px] font-thin">
+              Allow conversations to improve the platform
+            </p>
+          </div>
+
+          <Toggle />
+        </div>
+
+        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
+          <div>
+            <span className="font-extralight">Export Data</span>
+            <p className="text-[11px] font-thin">
+              Download a copy of your account data
+            </p>
+          </div>
+
+          <Button variant="outline">Export</Button>
+        </div>
+      </div>
+    </div>
+  );
 };
 const Security = () => {
-  return <div>Security</div>;
+  return (
+    <div className="w-full p-5">
+      <div className="border-b pb-3 pt-2">
+        <span>Security</span>
+      </div>
+
+      <div className="mt-3">
+        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
+          <div>
+            <span className="font-extralight">Change Password</span>
+            <p className="text-[11px] font-thin">
+              Update your account password
+            </p>
+          </div>
+
+          <Button variant="outline">Change</Button>
+        </div>
+
+        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
+          <div>
+            <span className="font-extralight">
+              Two-Factor Authentication
+            </span>
+            <p className="text-[11px] font-thin">
+              Add extra protection to your account
+            </p>
+          </div>
+
+          <Toggle />
+        </div>
+
+        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
+          <div>
+            <span className="font-extralight">Active Sessions</span>
+            <p className="text-[11px] font-thin">
+              Manage logged-in devices
+            </p>
+          </div>
+
+          <Button variant="outline">View</Button>
+        </div>
+      </div>
+    </div>
+  );
 };
+
+
 const Account = () => {
-  return <div>Account</div>;
+  return (
+    <div className="w-full p-5">
+      <div className="border-b pb-3 pt-2">
+        <span>Account</span>
+      </div>
+
+      <div className="mt-3">
+        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
+          <div>
+            <span className="font-extralight">Email Address</span>
+            <p className="text-[11px] font-thin">
+              user@example.com
+            </p>
+          </div>
+
+          <Button variant="outline">Edit</Button>
+        </div>
+
+        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
+          <div>
+            <span className="font-extralight">Phone Number</span>
+            <p className="text-[11px] font-thin">
+              Add a recovery phone number
+            </p>
+          </div>
+
+          <Button variant="outline">Add</Button>
+        </div>
+
+        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
+          <div>
+            <span className="font-extralight text-red-400">
+              Delete Account
+            </span>
+            <p className="text-[11px] font-thin">
+              Permanently delete your account
+            </p>
+          </div>
+
+          <Button variant="destructive">
+            Delete
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export {
