@@ -7,7 +7,7 @@ import { SidebarTrigger } from "../components/ui/sidebar";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
 import MessageRenderer from "../components/MessageRenderer";
-
+import { useLocation } from "react-router-dom";
 const Chat = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
