@@ -12,6 +12,9 @@ const Chat = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
+  const location = useLocation();
+
+
 
   const {
     chats,
@@ -23,6 +26,11 @@ const Chat = () => {
   } = useAuth();
 
   const messagesRef = useRef(null);
+  useEffect(() => {
+  if (location.state?.prompt) {
+    sendPrompt(location.state.prompt);
+  }
+}, []);
 
   useEffect(() => {
     const fetchChat = async () => {
