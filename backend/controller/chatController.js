@@ -3,6 +3,7 @@ import { formateGemini } from "../utils/formatForGemini.js";
 import { geminiresponse } from "../services/gemini.js";
 import chat from "../config/models/chat.js";
 import mongoose from "mongoose";
+import {deleteCachedMessages, getCachedMessages , setCachedMessages} from '../utils/chatCache.js'
 
 
 export const sendMessage = async (req, res) => {
@@ -37,6 +38,10 @@ export const sendMessage = async (req, res) => {
     
 
     await userChat.save();
+    
+
+    const  messageForCache=await userChat.messages.slice(-30);
+    await setCachedMessages(userChat._id.toString(),messageForCache);
 
     res.status(201).json({
       success: true,
@@ -60,7 +65,7 @@ export const deleteChat =async (req,res)=>{
     _id:chatId,
     userId:req.user._id
    });
-
+ await deleteCachedMessages(chatId)
    if(!deleteChat) return res.status(404).json({
     success:false,
     message:'chat not found'
@@ -131,10 +136,31 @@ export const chatById =async(req,res)=>{
                   })
 
                  }
+
+
+                 const cachedMessaegs = await getCachedMessages(chatid);
+                 if(cachedMessaegs){
+                  return res.status(200).json({
+                    success:true,
+                    chats:{
+                      ...chats.toObject(),
+                      messages:cachedMessaegs
+
+                    }
+                  })
+                 }
+
+                 const messages =await chat.findById(chatId).select("messages").lean()
+
+                 const recentMessage = messages.messages.slice(-30)
+                 await setCachedMessages(chatId , recentMessage);
+
+                 console.log('messages loaded from mongodb');
                  
                  return res.status(200).json({
                   success:true,
-                  chats
+                  ...chats.toObject(),
+                  messages:recentMessage
                  })
     
   } catch (error) {
