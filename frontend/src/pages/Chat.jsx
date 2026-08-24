@@ -42,7 +42,7 @@ const Chat = () => {
           { withCredentials: true },
         );
         console.log("res", res.data);
-        setMessages(res.data.chats.messages || []);
+        setMessages(res.data.chats?.messages || []);
         localStorage.setItem("chatid", currentchatId);
       } catch (err) {
         console.log("Error loading chat:", err);

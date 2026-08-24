@@ -1,4 +1,4 @@
-import redisClient from "../config/redis";
+import redisClient from "../config/redis.js";
 
 const getChatKey = (chatId)=> `chat:${chatId}:messages`;
 
@@ -16,7 +16,7 @@ export const getCachedMessages = async(chatId)=>{
     return JSON.parse(messages);
 }
 
-export const  setCachedMessages = async(chatId  , messagges)=>{
+export const  setCachedMessages = async(chatId  , messages)=>{
 
     const key = getChatKey(chatId);
      await redisClient.set(

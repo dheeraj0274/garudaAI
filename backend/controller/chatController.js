@@ -126,7 +126,7 @@ export const chatById =async(req,res)=>{
       const chats=await chat.findOne({
                   _id:new mongoose.Types.ObjectId(chatid) ,
                   userId:new mongoose.Types.ObjectId(userId)
-                 })
+                 }).select('userId title isArchieved createdAt updatedAt');
                  console.log('chat',chats)
 
                  if(!chats){
@@ -139,9 +139,12 @@ export const chatById =async(req,res)=>{
 
 
                  const cachedMessaegs = await getCachedMessages(chatid);
+             console.log('from redis' , cachedMessaegs);
+                
                  if(cachedMessaegs){
                   return res.status(200).json({
                     success:true,
+                    message:'loaded from redis',
                     chats:{
                       ...chats.toObject(),
                       messages:cachedMessaegs
@@ -150,10 +153,13 @@ export const chatById =async(req,res)=>{
                   })
                  }
 
-                 const messages =await chat.findById(chatId).select("messages").lean()
+                 const messages =await chat.findById(chatid).select("messages").lean()
+                 
 
-                 const recentMessage = messages.messages.slice(-30)
-                 await setCachedMessages(chatId , recentMessage);
+                 const recentMessage = messages.messages.slice(-30);
+               
+                 await setCachedMessages(chatid , recentMessage);
+                
 
                  console.log('messages loaded from mongodb');
                  
@@ -164,10 +170,10 @@ export const chatById =async(req,res)=>{
                  })
     
   } catch (error) {
-    console.log(error.message)
+    console.log(error)
     return res.status(500).json({
       success:'false',
-      error:error.message
+      error:error
     })
     
   }
