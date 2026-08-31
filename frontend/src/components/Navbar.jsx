@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { User, Mail, ShieldCheck, LogOut } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -150,54 +151,95 @@ console.log(modeColors[mode])
 
 
       </div>
-
       {/* profile-section */}
-      <div className="flex md:gap-3 items-center">
-        <DropdownMenu >
-          <DropdownMenuTrigger className='outline-none'>
-            <Avatar className={isLoggedIn ? 'block mr-1 bg-zinc-800' : 'hidden'} >
-  <AvatarImage  />
-  <AvatarFallback className='text-white' >{initials}</AvatarFallback>
-</Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className='mr-1 bg-zinc-700  border-none mt-5'>
-            <DropdownMenuLabel className='text-gray-100 font-semibold'>Profile</DropdownMenuLabel>
-           
-            <DropdownMenuSeparator />
+<div className="flex md:gap-3 items-center">
+  <DropdownMenu>
+    <DropdownMenuTrigger className="outline-none focus-visible:ring-2 focus-visible:ring-orange-400 rounded-full transition-shadow">
+      <Avatar
+        className={
+          isLoggedIn
+            ? 'block mr-1 bg-zinc-800 ring-2 ring-zinc-700 hover:ring-orange-400 transition-all duration-200 cursor-pointer'
+            : 'hidden'
+        }
+      >
+        <AvatarImage />
+        <AvatarFallback className="text-white font-medium">
+          {initials}
+        </AvatarFallback>
+      </Avatar>
+    </DropdownMenuTrigger>
 
-            
-            <DropdownMenuItem className='hover:bg-gray-500'>  
-             
-              <span className="text-[12px] font-semibold pl-1 text-zinc-300">{userDetails?.name}</span></DropdownMenuItem>
-            
-            
-            
-            <DropdownMenuItem className='hover:bg-gray-500'>
-               
-            
-                <span className="pl-1 text-[12px] font-semibold text-zinc-300">{userDetails?.email}</span></DropdownMenuItem>
-            
-            
-            
-            <DropdownMenuItem className='hover:bg-gray-500'>
-                 
-          
-                <span className="font-semibold text-[12px] pl-1 text-zinc-300">{userDetails?.authProvider}</span></DropdownMenuItem>
+    <DropdownMenuContent className="mr-1 mt-3 w-64 bg-zinc-800 border border-zinc-700 shadow-xl rounded-xl p-1.5">
+      <DropdownMenuLabel className="text-zinc-100 font-semibold px-2 py-2 text-sm">
+        My Profile
+      </DropdownMenuLabel>
 
-            <DropdownMenuItem>
-                 <Button onClick={logout} className='text-red-300 font-bold'>Logout</Button>
-            </DropdownMenuItem>
-                
-           
-           
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <IoGiftOutline className={isLoggedIn ? 'block' : 'hidden'} size={25} color='yellow'/>
+      <DropdownMenuSeparator className="bg-zinc-700" />
 
+      <div className="px-2 py-2 space-y-2.5">
+        <div className="flex items-center gap-2.5">
+          <User size={15} className="text-zinc-400 shrink-0" />
+          <span className="text-[13px] font-medium text-zinc-200 truncate">
+            {userDetails?.name}
+          </span>
+        </div>
 
-        <Button className={isLoggedIn ? 'hidden' : 'bg-orange-400 ml-1 text-white h-[30px] w-[50px]'}  onClick={openLogin}>Login</Button>
-  
+        <div className="flex items-center gap-2.5">
+          <Mail size={15} className="text-zinc-400 shrink-0" />
+          <span className="text-[13px] font-medium text-zinc-200 truncate">
+            {userDetails?.email}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2.5">
+          <ShieldCheck size={15} className="text-zinc-400 shrink-0" />
+          <span className="text-[13px] font-medium text-zinc-200 capitalize truncate">
+            {userDetails?.authProvider}
+          </span>
+        </div>
       </div>
+
+      <DropdownMenuSeparator className="bg-zinc-700" />
+
+      <DropdownMenuItem
+        onClick={logout}
+        className="rounded-lg cursor-pointer hover:bg-red-500/10 focus:bg-red-500/10 mt-1 px-2 py-2"
+      >
+        <div className="flex items-center gap-2.5 text-red-400 font-semibold text-[13px]">
+          <LogOut size={15} />
+          Logout
+        </div>
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+
+  <button
+    className={
+      isLoggedIn
+        ? 'block'
+        : 'hidden'
+    }
+    aria-label="Rewards"
+  >
+    <IoGiftOutline
+      size={23}
+      className="text-yellow-400 hover:text-yellow-300 transition-colors cursor-pointer"
+    />
+  </button>
+
+  <Button
+    className={
+      isLoggedIn
+        ? 'hidden'
+        : 'bg-orange-400 hover:bg-orange-500 ml-1 text-white h-9 px-4 font-medium shadow-sm transition-colors'
+    }
+    onClick={openLogin}
+  >
+    Login
+  </Button>
+</div>
+
+   
     </div>
     </div>
   );
