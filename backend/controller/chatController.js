@@ -100,7 +100,7 @@ export const getAllChat= async(req,res)=>{
   const user = req.user._id;
   
   const  allChats = await chat.find({userId:user});
-  console.log('chats',allChats);
+  // console.log('chats',allChats);
   
   
 
@@ -127,7 +127,7 @@ export const chatById =async(req,res)=>{
                   _id:new mongoose.Types.ObjectId(chatid) ,
                   userId:new mongoose.Types.ObjectId(userId)
                  }).select('userId title isArchieved createdAt updatedAt');
-                 console.log('chat',chats)
+                 
 
                  if(!chats){
                   return res.status(404).json({
