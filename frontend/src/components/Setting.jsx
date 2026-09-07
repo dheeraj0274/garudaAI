@@ -1,22 +1,17 @@
 import { IoClose } from "react-icons/io5";
-import {Button} from '../components/ui/button'
+import { Button } from "../components/ui/button";
 
-import { IoIosSettings ,
-         IoIosNotificationsOutline ,
-         
-        
-        
-        
-         IoMdAddCircleOutline 
-  } from "react-icons/io";
-  import { BsDatabaseFillGear } from "react-icons/bs";
-  import { FaFaceGrin } from "react-icons/fa6";
-  import { IoKey } from "react-icons/io5";
-  import { IoNotificationsSharp } from "react-icons/io5";
-  
- 
+import {
+  IoIosSettings,
+  IoIosNotificationsOutline,
+  IoMdAddCircleOutline,
+} from "react-icons/io";
+import { BsDatabaseFillGear } from "react-icons/bs";
+import { FaFaceGrin } from "react-icons/fa6";
+import { IoKey } from "react-icons/io5";
+import { IoNotificationsSharp } from "react-icons/io5";
 
-    import {
+import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -25,156 +20,134 @@ import { IoIosSettings ,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-import {General , Notification ,DataControl, Personalization,Security,Account} from '../utils/settingUI.jsx'
+import {
+  General,
+  Notification,
+  DataControl,
+  Personalization,
+  Security,
+  Account,
+} from "../utils/settingUI.jsx";
 import { useState } from "react";
 
-
-
-
-const setting_icons=[
+const setting_icons = [
   {
-    title:'General',
-    icon:<IoIosSettings size={15}/>
-
+    title: "General",
+    icon: <IoIosSettings size={16} />,
   },
-    {
-    title:'Notification',
-    icon:<IoNotificationsSharp size={15}/>
-
+  {
+    title: "Notification",
+    icon: <IoNotificationsSharp size={16} />,
   },
-    {
-    title:'Personalization',
-    icon:<FaFaceGrin size={15}/>
-
+  {
+    title: "Personalization",
+    icon: <FaFaceGrin size={16} />,
   },
-     {
-    title:'Data Control',
-    icon:<BsDatabaseFillGear size={15}/>
-
+  {
+    title: "Data Control",
+    icon: <BsDatabaseFillGear size={16} />,
   },
-    {
-    title:'Security',
-    icon:<IoKey size={15}/>
-
+  {
+    title: "Security",
+    icon: <IoKey size={16} />,
   },
-    {
-    title:'Account',
-    icon:<IoMdAddCircleOutline size={15}/>
-
+  {
+    title: "Account",
+    icon: <IoMdAddCircleOutline size={16} />,
   },
-  
-
-]
-
+];
 
 const Settings = ({ close }) => {
+  const [activeTab, setActiveTab] = useState("General");
 
-  const [activeTab,setActiveTab]=useState('General')
+  const handleClick = (e) => {
+    setActiveTab(e);
+  };
 
-
-  const handleClick=(e)=>{
-      setActiveTab(e)
-
-
-  }
   console.log(activeTab);
-  
 
- 
-    
-     
-  
-   
+  const renderContent = () => {
+    switch (activeTab) {
+      case "General":
+        return <General />;
+        break;
+      case "Notification":
+        return <Notification />;
+        break;
+      case "Personalization":
+        return <Personalization />;
+        break;
+      case "Data Control":
+        return <DataControl />;
+        break;
+      case "Security":
+        return <Security />;
+        break;
+      case "Account":
+        return <Account />;
+        break;
 
-  const renderContent=()=>{
-          switch(activeTab){
-            case 'General':
-              return <General />
-              break;
-            case 'Notification':
-                return <Notification />
-                break;
-                 case 'Personalization':
-                return <Personalization/>
-                break;
-                 case 'Data Control':
-                return <DataControl/>
-                break;
-                 case 'Security':
-                return <Security/>
-                break;
-                 case 'Account':
-                return <Account/>
-                break;
+      default:
+        <General />;
+    }
+  };
 
-
-            default: <General/>;
-          }
-  }
   return (
     <>
-     
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"
         onClick={close}
       />
 
-     
-      <div className="fixed inset-0 flex items-center justify-center z-50 ">
-        
-        <div className=" text-white w-[85%] md:w-[70%]  md:h-[60%] h-[45%]  rounded-2xl   relative">
-          <div className="flex w-full h-full  ">
-
-          {/* left-setting-container */}
-
-             <div className="bg-gray-900 w-[31%] rounded-l-xl p-2 md:p-3   ">
-              <div className=" hover:bg-gray-500 cursor-pointer max-w-fit rounded-[2px] ">
-                  <IoClose  onClick={close} size={20} />
+      <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
+        <div className="text-white w-full max-w-3xl md:h-[65%] h-[70%] rounded-2xl relative shadow-2xl shadow-black/60 ring-1 ring-white/10 overflow-hidden">
+          <div className="flex w-full h-full">
+            {/* left-setting-container */}
+            <div className="bg-zinc-950 w-[34%] md:w-[30%] p-3 md:p-4 flex flex-col border-r border-zinc-800">
+              <div className="flex justify-end">
+                <div className="hover:bg-zinc-800 cursor-pointer rounded-md p-1.5 transition-colors">
+                  <IoClose onClick={close} size={18} />
+                </div>
               </div>
-
 
               {/* sidebar */}
-              <div className="flex flex-col gap-2 md:mt-11 mt-5">
-                {
-                  setting_icons.map((item)=>(
-                   
-
+              <div className="flex flex-col gap-1 md:mt-8 mt-4">
+                {setting_icons.map((item) => {
+                  const isActive = activeTab === item?.title;
+                  return (
                     <div
-                       onClick={()=>handleClick(item?.title)}
-                    className="flex  items-center pl-[.3rem] gap-2 md:p-2 hover:bg-gray-700 rounded-xl cursor-pointer">
-                      <span>{item?.icon}</span>
-                      <span className="  max-[550px]:text-[9px] max-[760px]:font-light  md:text-[13px]">{item?.title}</span>
-
-
-                      </div>
-                     
-
-                  ))
-                }
+                      key={item?.title}
+                      onClick={() => handleClick(item?.title)}
+                      className={`flex items-center gap-2 pl-2 md:p-2.5 p-2 rounded-lg cursor-pointer transition-colors
+                        ${
+                          isActive
+                            ? "bg-zinc-800 text-white"
+                            : "text-zinc-400 hover:bg-zinc-800/60 hover:text-zinc-200"
+                        }`}
+                    >
+                      <span className={isActive ? "text-lime-400" : ""}>
+                        {item?.icon}
+                      </span>
+                      <span className="max-[550px]:text-[10px] max-[760px]:font-light md:text-[13px] truncate">
+                        {item?.title}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
-             
-              
+            </div>
 
-             </div>
-
-
-         {/* right setting container */}
-          <div className="bg-zinc-900 w-[70%] rounded-r-xl">
-            {renderContent()}
-
+            {/* right setting container */}
+            <div className="bg-zinc-900 w-[66%] md:w-[70%] overflow-y-auto">
+              {renderContent()}
+            </div>
           </div>
         </div>
-
-       
-         
-
-        </div>
-
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

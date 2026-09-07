@@ -17,33 +17,63 @@ import Toggle from "../components/ui/toggle";
 
 import { useSetting } from "../context/settingContext";
 
+/* ---------- Shared presentational helpers (no logic, styling only) ---------- */
+
+const SectionHeader = ({ title }) => (
+  <div className="border-b border-zinc-700 pb-3 pt-2 mb-4">
+    <span className="text-lg font-semibold text-zinc-100 tracking-tight">
+      {title}
+    </span>
+  </div>
+);
+
+const SettingRow = ({ label, description, children }) => (
+  <div className="flex items-center justify-between gap-4 border-b border-zinc-800 py-4 first:pt-0 last:border-b-0">
+    <div className="flex flex-col gap-0.5 min-w-0">
+      <span className="font-medium text-zinc-200 max-[500px]:text-[13px]">
+        {label}
+      </span>
+      {description && (
+        <p className="text-[12px] font-normal text-zinc-500 leading-snug">
+          {description}
+        </p>
+      )}
+    </div>
+    <div className="shrink-0">{children}</div>
+  </div>
+);
+
+const dropdownTriggerClass =
+  "outline-none font-normal border border-zinc-700 bg-zinc-800/60 hover:bg-zinc-700 hover:border-zinc-600 text-zinc-200 rounded-lg px-3 transition-colors max-[500px]:text-[13px]";
+
+const dropdownContentClass =
+  "bg-zinc-800 border border-zinc-700 rounded-xl shadow-xl shadow-black/40 p-1";
+
+const dropdownItemClass =
+  "rounded-lg cursor-pointer hover:bg-zinc-700/80 focus:bg-zinc-700/80 transition-colors flex items-center gap-2 px-2 py-2";
+
+/* ---------------------------------------------------------------------- */
+
 const General = () => {
   const { generalSetting, setGeneralSettings, colorData } = useSetting();
 
   return (
     <div className="w-full p-5">
-      <div className="border-b-1 pb-3 pt-2">
-        <span>General</span>
-      </div>
+      <SectionHeader title="General" />
 
-      <div className="mt-3">
-        <div className="flex items-center justify-between border-b-1 mt-3 pb-2 border-zinc-600">
-          <span className="font-extralight max-[500px]:text-[13px]">
-            Appearance
-          </span>
+      <div className="flex flex-col">
+        <SettingRow label="Appearance">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
-              >
-                {generalSetting?.theme} <RiArrowDropDownLine size={30} />
+              <Button variant="outline" className={dropdownTriggerClass}>
+                {generalSetting?.theme}
+                <RiArrowDropDownLine size={22} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-zinc-700 border-none">
-              <DropdownMenuGroup className="text-white font-light ">
+            <DropdownMenuContent className={dropdownContentClass}>
+              <DropdownMenuGroup className="text-zinc-200 font-normal">
                 <DropdownMenuItem
-                  className="hover:bg-zinc-900"
+                  className={dropdownItemClass}
                   onClick={() =>
                     setGeneralSettings((prev) => ({ ...prev, theme: "System" }))
                   }
@@ -51,7 +81,7 @@ const General = () => {
                   System
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="hover:bg-zinc-900"
+                  className={dropdownItemClass}
                   onClick={() =>
                     setGeneralSettings((prev) => ({ ...prev, theme: "Dark" }))
                   }
@@ -59,7 +89,7 @@ const General = () => {
                   Dark
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="hover:bg-zinc-900"
+                  className={dropdownItemClass}
                   onClick={() =>
                     setGeneralSettings((prev) => ({ ...prev, theme: "Light" }))
                   }
@@ -69,25 +99,20 @@ const General = () => {
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+        </SettingRow>
 
-        <div className="flex items-center justify-between border-b mt-5 pb-2 border-zinc-600 ">
-          <span className="font-extralight max-[500px]:text-[13px]">
-            Contrast
-          </span>
+        <SettingRow label="Contrast">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
-              >
-                {generalSetting?.contrast} <RiArrowDropDownLine size={30} />
+              <Button variant="outline" className={dropdownTriggerClass}>
+                {generalSetting?.contrast}
+                <RiArrowDropDownLine size={22} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-zinc-700 border-none">
-              <DropdownMenuGroup className="text-white font-light ">
+            <DropdownMenuContent className={dropdownContentClass}>
+              <DropdownMenuGroup className="text-zinc-200 font-normal">
                 <DropdownMenuItem
-                  className="hover:bg-zinc-900"
+                  className={dropdownItemClass}
                   onClick={() =>
                     setGeneralSettings((prev) => ({
                       ...prev,
@@ -98,7 +123,7 @@ const General = () => {
                   System
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="hover:bg-zinc-900"
+                  className={dropdownItemClass}
                   onClick={() =>
                     setGeneralSettings((prev) => ({
                       ...prev,
@@ -109,7 +134,7 @@ const General = () => {
                   Medium
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="hover:bg-zinc-900"
+                  className={dropdownItemClass}
                   onClick={() =>
                     setGeneralSettings((prev) => ({
                       ...prev,
@@ -122,54 +147,34 @@ const General = () => {
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-        <div className="flex items-center justify-between border-b mt-5 pb-2 border-zinc-600">
-          <span className="font-extralight max-[500px]:text-[13px]">
-            Accent Color
-          </span>
+        </SettingRow>
+
+        <SettingRow label="Accent Color">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
+                className={`${dropdownTriggerClass} flex items-center gap-2`}
               >
                 <span
-                  className={`w-2 h-2 rounded-full ${generalSetting?.accColor?.value}`}
+                  className={`w-2.5 h-2.5 rounded-full ring-1 ring-white/20 ${generalSetting?.accColor?.value}`}
                 ></span>
-                {generalSetting?.accColor?.name} <RiArrowDropDownLine size={30} />
+                {generalSetting?.accColor?.name}
+                <RiArrowDropDownLine size={22} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-zinc-700 border-none">
-              <DropdownMenuGroup className="text-white font-light ">
-                {/* <DropdownMenuItem className='hover:bg-zinc-900' onClick={()=>setaccColoraccColor('System')}>
-
-                <span className="w-2 h-2 rounded-full bg-zinc-500"></span>Default</DropdownMenuItem>
-
-              <DropdownMenuItem className='hover:bg-zinc-900' onClick={()=>setaccColor('green')}>
-
-                <span className="w-2 h-2 rounded-full bg-green-500"></span>green</DropdownMenuItem>
-
-               <DropdownMenuItem className='hover:bg-zinc-900' onClick={()=>setaccColor('yellow')}>
-
-                <span className="w-2 h-2 rounded-full bg-yellow-500"></span>yellow</DropdownMenuItem>
-
-
-                 <DropdownMenuItem className='hover:bg-zinc-900' onClick={()=>setaccColor('pink')}>
-
-                <span className="w-2 h-2 rounded-full bg-pink-500"></span>pink</DropdownMenuItem>
-
-                 <DropdownMenuItem className='hover:bg-zinc-900' onClick={()=>setaccColor('purple')}>
-
-                <span className="w-2 h-2 rounded-full bg-purple-500"></span>purple</DropdownMenuItem> */}
-                {colorData.map((item) => (
+            <DropdownMenuContent className={dropdownContentClass}>
+              <DropdownMenuGroup className="text-zinc-200 font-normal">
+                {colorData.map((item, idx) => (
                   <DropdownMenuItem
-                    className="hover:bg-zinc-900"
+                    key={idx}
+                    className={dropdownItemClass}
                     onClick={() =>
                       setGeneralSettings((prev) => ({ ...prev, accColor: item }))
                     }
                   >
                     <span
-                      className={`w-2 h-2 rounded-full ${item?.value}`}
+                      className={`w-2.5 h-2.5 rounded-full ring-1 ring-white/20 ${item?.value}`}
                     ></span>
                     {item?.name}
                   </DropdownMenuItem>
@@ -177,7 +182,7 @@ const General = () => {
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+        </SettingRow>
       </div>
     </div>
   );
@@ -188,110 +193,93 @@ const Notification = () => {
 
   return (
     <div className="w-full p-5">
-      <div className="border-b-1 pb-3 pt-2">
-        <span>General</span>
-      </div>
+      <SectionHeader title="Notifications" />
 
-      <div className="mt-3">
-        <div className="flex items-center justify-between border-b-1 mt-3 pb-2 border-zinc-600">
-          <span className="font-extralight max-[500px]:text-[13px]">
-            Responses
-          </span>
+      <div className="flex flex-col">
+        <SettingRow label="Responses">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
-              >
+              <Button variant="outline" className={dropdownTriggerClass}>
                 {notification?.push ? "Push" : "Off"}
-                <RiArrowDropDownLine size={30} />
+                <RiArrowDropDownLine size={22} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-zinc-700 border-none">
-              <DropdownMenuGroup className="text-white font-light ">
-                <DropdownMenuItem className="hover:bg-zinc-900">
+            <DropdownMenuContent className={dropdownContentClass}>
+              <DropdownMenuGroup className="text-zinc-200 font-normal">
+                <DropdownMenuItem className={dropdownItemClass}>
                   <Toggle
                     checked={notification?.push}
                     onChange={(val) =>
                       setNotification((prev) => ({ ...prev, push: val }))
                     }
                   />
-                  Push
+                  <span>Push</span>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-      </div>
-      <div className="mt-3">
-        <div className="flex items-center justify-between border-b-1 mt-3 pb-2 border-zinc-600">
-          <span className="font-extralight max-[500px]:text-[13px]">
-            Group Chats
-          </span>
+        </SettingRow>
+
+        <SettingRow label="Group Chats">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
-              >
+              <Button variant="outline" className={dropdownTriggerClass}>
                 {notification?.email ? "Email" : "Off"}
-                <RiArrowDropDownLine size={30} />
+                <RiArrowDropDownLine size={22} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-zinc-700 border-none">
-              <DropdownMenuGroup className="text-white font-light ">
-                <DropdownMenuItem className="hover:bg-zinc-900">
+            <DropdownMenuContent className={dropdownContentClass}>
+              <DropdownMenuGroup className="text-zinc-200 font-normal">
+                <DropdownMenuItem className={dropdownItemClass}>
                   <Toggle
                     checked={notification?.email}
                     onChange={(val) =>
                       setNotification((prev) => ({ ...prev, email: val }))
                     }
                   />
-                  {notification?.email ? "Email" : "Off"}
+                  <span>{notification?.email ? "Email" : "Off"}</span>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-      </div>
-      <div className="mt-3">
-        <div className="flex items-center justify-between border-b-1 mt-3 pb-2 border-zinc-600">
-          <span className="font-extralight max-[500px]:text-[13px]">Usage</span>
+        </SettingRow>
+
+        <SettingRow label="Usage">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px] flex "
+                className={`${dropdownTriggerClass} flex items-center gap-1`}
               >
-                {notification?.u_push ? "Push " : "Off "},
-                {notification?.u_email ? " Email" : " Off"}
-                <RiArrowDropDownLine size={30} />
+                <span>{notification?.u_push ? "Push" : "Off"},</span>
+                <span>{notification?.u_email ? "Email" : "Off"}</span>
+                <RiArrowDropDownLine size={22} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-zinc-700 border-none">
-              <DropdownMenuGroup className="text-white font-light ">
-                <DropdownMenuItem className="hover:bg-zinc-900">
+            <DropdownMenuContent className={dropdownContentClass}>
+              <DropdownMenuGroup className="text-zinc-200 font-normal">
+                <DropdownMenuItem className={dropdownItemClass}>
                   <Toggle
                     checked={notification?.u_push}
                     onChange={(val) =>
                       setNotification((prev) => ({ ...prev, u_push: val }))
                     }
                   />
-                  Push
+                  <span>Push</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-zinc-900">
+                <DropdownMenuItem className={dropdownItemClass}>
                   <Toggle
                     checked={notification?.u_email}
                     onChange={(val) =>
                       setNotification((prev) => ({ ...prev, u_email: val }))
                     }
                   />
-                  Email
+                  <span>Email</span>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+        </SettingRow>
       </div>
     </div>
   );
@@ -300,210 +288,194 @@ const Notification = () => {
 const Personalization = () => {
   return (
     <div className="w-full p-5">
-      <div className="border-b-1 pb-3 pt-2">
-        <span>Personalization</span>
-      </div>
+      <SectionHeader title="Personalization" />
 
-      <div className="mt-3">
-        <div className="flex items-center justify-between mt-3 pb-2 border-zinc-600">
-          <div className="flex flex-col gap-1">
-            <span className="font-extralight max-[500px]:text-[13px]">
-              Basic style and tone
-            </span>
-            <p className="font-thin text-[11px]">
+      <div className="flex flex-col">
+        <SettingRow
+          label="Basic style and tone"
+          description={
+            <>
               Set the style and tone of how ChatGPT responds to you. This
-              <br></br>doesn't impact ChatGPT's capabilities. Default
-            </p>
-          </div>
-
+              <br />
+              doesn't impact ChatGPT's capabilities. Default
+            </>
+          }
+        >
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="outline-none font-light border-none hover:bg-zinc-700 max-[500px]:text-[13px]"
-              >
-                <RiArrowDropDownLine size={30} />
+              <Button variant="outline" className={dropdownTriggerClass}>
+                <RiArrowDropDownLine size={22} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-zinc-700 border-none">
-              <DropdownMenuGroup className="text-white font-light ">
-                <DropdownMenuItem className="hover:bg-zinc-900">
+            <DropdownMenuContent className={dropdownContentClass}>
+              <DropdownMenuGroup className="text-zinc-200 font-normal">
+                <DropdownMenuItem className={dropdownItemClass}>
                   System
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-zinc-900">
+                <DropdownMenuItem className={dropdownItemClass}>
                   <div className="flex flex-col">
-                     Professional<span className="font-thin text-[11px]">Polished and precise</span>
-
+                    <span>Professional</span>
+                    <span className="font-normal text-[11px] text-zinc-500">
+                      Polished and precise
+                    </span>
                   </div>
-                  
-                 
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-zinc-900">
-                  
+                <DropdownMenuItem className={dropdownItemClass}>
                   <div className="flex flex-col">
-                     Candid<span className="font-thin text-[11px]">Direct and encouraging</span>
-
+                    <span>Candid</span>
+                    <span className="font-normal text-[11px] text-zinc-500">
+                      Direct and encouraging
+                    </span>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-zinc-900">
+                <DropdownMenuItem className={dropdownItemClass}>
                   <div className="flex flex-col">
-                     Quirky<span className="font-thin text-[11px]">Playful and imaginative</span>
-
+                    <span>Quirky</span>
+                    <span className="font-normal text-[11px] text-zinc-500">
+                      Playful and imaginative
+                    </span>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-zinc-900">
-                <div className="flex flex-col">
-                     Efficient<span className="font-thin text-[11px]">Concise and plain</span>
-
+                <DropdownMenuItem className={dropdownItemClass}>
+                  <div className="flex flex-col">
+                    <span>Efficient</span>
+                    <span className="font-normal text-[11px] text-zinc-500">
+                      Concise and plain
+                    </span>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-zinc-900">
-                 <div className="flex flex-col">
-                     Cynical<span className="font-thin text-[11px]">Critical and sarcastic</span>
-
+                <DropdownMenuItem className={dropdownItemClass}>
+                  <div className="flex flex-col">
+                    <span>Cynical</span>
+                    <span className="font-normal text-[11px] text-zinc-500">
+                      Critical and sarcastic
+                    </span>
                   </div>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+        </SettingRow>
       </div>
     </div>
   );
 };
+
 const DataControl = () => {
   return (
     <div className="w-full p-5">
-      <div className="border-b pb-3 pt-2">
-        <span>Data Controls</span>
-      </div>
+      <SectionHeader title="Data Controls" />
 
-      <div className="mt-3">
-        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
-          <div>
-            <span className="font-extralight">Chat History</span>
-            <p className="text-[11px] font-thin">
-              Save conversations for future reference
-            </p>
-          </div>
-
+      <div className="flex flex-col">
+        <SettingRow
+          label="Chat History"
+          description="Save conversations for future reference"
+        >
           <Toggle />
-        </div>
+        </SettingRow>
 
-        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
-          <div>
-            <span className="font-extralight">Training Data</span>
-            <p className="text-[11px] font-thin">
-              Allow conversations to improve the platform
-            </p>
-          </div>
-
+        <SettingRow
+          label="Training Data"
+          description="Allow conversations to improve the platform"
+        >
           <Toggle />
-        </div>
+        </SettingRow>
 
-        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
-          <div>
-            <span className="font-extralight">Export Data</span>
-            <p className="text-[11px] font-thin">
-              Download a copy of your account data
-            </p>
-          </div>
-
-          <Button variant="outline">Export</Button>
-        </div>
+        <SettingRow
+          label="Export Data"
+          description="Download a copy of your account data"
+        >
+          <Button
+            variant="outline"
+            className="border-zinc-700 bg-zinc-800/60 hover:bg-zinc-700 text-zinc-200 rounded-lg"
+          >
+            Export
+          </Button>
+        </SettingRow>
       </div>
     </div>
   );
 };
+
 const Security = () => {
   return (
     <div className="w-full p-5">
-      <div className="border-b pb-3 pt-2">
-        <span>Security</span>
-      </div>
+      <SectionHeader title="Security" />
 
-      <div className="mt-3">
-        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
-          <div>
-            <span className="font-extralight">Change Password</span>
-            <p className="text-[11px] font-thin">
-              Update your account password
-            </p>
-          </div>
+      <div className="flex flex-col">
+        <SettingRow
+          label="Change Password"
+          description="Update your account password"
+        >
+          <Button
+            variant="outline"
+            className="border-zinc-700 bg-zinc-800/60 hover:bg-zinc-700 text-zinc-200 rounded-lg"
+          >
+            Change
+          </Button>
+        </SettingRow>
 
-          <Button variant="outline">Change</Button>
-        </div>
-
-        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
-          <div>
-            <span className="font-extralight">
-              Two-Factor Authentication
-            </span>
-            <p className="text-[11px] font-thin">
-              Add extra protection to your account
-            </p>
-          </div>
-
+        <SettingRow
+          label="Two-Factor Authentication"
+          description="Add extra protection to your account"
+        >
           <Toggle />
-        </div>
+        </SettingRow>
 
-        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
-          <div>
-            <span className="font-extralight">Active Sessions</span>
-            <p className="text-[11px] font-thin">
-              Manage logged-in devices
-            </p>
-          </div>
-
-          <Button variant="outline">View</Button>
-        </div>
+        <SettingRow
+          label="Active Sessions"
+          description="Manage logged-in devices"
+        >
+          <Button
+            variant="outline"
+            className="border-zinc-700 bg-zinc-800/60 hover:bg-zinc-700 text-zinc-200 rounded-lg"
+          >
+            View
+          </Button>
+        </SettingRow>
       </div>
     </div>
   );
 };
-
 
 const Account = () => {
   return (
     <div className="w-full p-5">
-      <div className="border-b pb-3 pt-2">
-        <span>Account</span>
-      </div>
+      <SectionHeader title="Account" />
 
-      <div className="mt-3">
-        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
-          <div>
-            <span className="font-extralight">Email Address</span>
-            <p className="text-[11px] font-thin">
-              user@example.com
-            </p>
-          </div>
+      <div className="flex flex-col">
+        <SettingRow label="Email Address" description="user@example.com">
+          <Button
+            variant="outline"
+            className="border-zinc-700 bg-zinc-800/60 hover:bg-zinc-700 text-zinc-200 rounded-lg"
+          >
+            Edit
+          </Button>
+        </SettingRow>
 
-          <Button variant="outline">Edit</Button>
-        </div>
+        <SettingRow
+          label="Phone Number"
+          description="Add a recovery phone number"
+        >
+          <Button
+            variant="outline"
+            className="border-zinc-700 bg-zinc-800/60 hover:bg-zinc-700 text-zinc-200 rounded-lg"
+          >
+            Add
+          </Button>
+        </SettingRow>
 
-        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
-          <div>
-            <span className="font-extralight">Phone Number</span>
-            <p className="text-[11px] font-thin">
-              Add a recovery phone number
-            </p>
-          </div>
-
-          <Button variant="outline">Add</Button>
-        </div>
-
-        <div className="flex items-center justify-between border-b mt-3 pb-2 border-zinc-600">
-          <div>
-            <span className="font-extralight text-red-400">
+        <div className="flex items-center justify-between gap-4 border-b border-zinc-800 py-4 last:border-b-0">
+          <div className="flex flex-col gap-0.5 min-w-0">
+            <span className="font-medium text-red-400 max-[500px]:text-[13px]">
               Delete Account
             </span>
-            <p className="text-[11px] font-thin">
+            <p className="text-[12px] font-normal text-zinc-500 leading-snug">
               Permanently delete your account
             </p>
           </div>
 
-          <Button variant="destructive">
+          <Button variant="destructive" className="rounded-lg shrink-0">
             Delete
           </Button>
         </div>
