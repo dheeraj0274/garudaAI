@@ -237,12 +237,13 @@ import { SidebarTrigger } from "../components/ui/sidebar";
 import axios from "axios";
 import { useAuth } from "../context/authContext";
 import MessageRenderer from "../components/MessageRenderer";
-import { useLocation } from "react-router-dom";
+import { useLocation ,useNavigate } from "react-router-dom";
 const Chat = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate()
 
 
 
@@ -426,7 +427,7 @@ const Chat = () => {
         </button>
       )}
 
-      <div className="fixed bottom-0 rounded-2xl w-[95%] md:w-[80%] h-[100px] backdrop-blur-md md:left-[17rem] border border-[#C9A96A]/15 bg-[#0B0C10]/80 p-3">
+      <div className="fixed bottom-0 rounded-2xl w-[95%] md:w-[80%] h-[100px] backdrop-blur-md md:left-[17rem] border border-none p-3">
         <div className="flex justify-center items-center flex-col w-full h-full">
           <div className="flex items-center justify-center gap-2 w-full">
             <Input
