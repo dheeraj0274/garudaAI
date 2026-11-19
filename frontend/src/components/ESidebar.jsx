@@ -295,7 +295,7 @@ const {loadAllChats}=useAuth()
           </span>
         </SidebarMenuButton>
 
-        {/* Three-dot button — visible on hover or when menu is open */}
+      
         {(hoveredChat || menuOpen) && (
           <div className="relative flex-shrink-0" ref={menuRef}>
             <button
