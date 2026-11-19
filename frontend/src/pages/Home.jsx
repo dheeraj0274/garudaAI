@@ -221,7 +221,9 @@ const Home = () => {
     <div className="flex flex-row min-h-screen w-full bg-gradient-to-b from-black via-zinc-950 to-black">
     
       <div className="pt-4 pl-3">
-        <SidebarTrigger className="text-white/80 hover:text-white transition-colors" />
+       
+               <SidebarTrigger className="text-[#C9A96A] hover:text-[#DEC28B] hover:bg-[#C9A96A]/10" />
+           
       </div>
 
       <div className="w-full">
