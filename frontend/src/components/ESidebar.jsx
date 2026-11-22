@@ -232,7 +232,7 @@ import { useSidebar } from './ui/sidebar';
 import Setting from './Setting.jsx'
 
 const items = [
-  { title: "Home", url: "#", icon: Home },
+  { title: "Home", url: "/", icon: Home },
   { title: "New Chat", url: "#", icon: Inbox },
   { title: "Library", url: "#", icon: Calendar },
   { title: "Search Chats", url: "#", icon: Search },
@@ -357,6 +357,8 @@ const ESidebar = () => {
       case 'Settings':
         setOpenSetting(true);
         break;
+      case 'Home'  :
+        navigate('/')
       default:
         return;
     }

@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import otp from "../config/models/otp.js";
 import { signToken } from "../utils/authutiils.js";
 import sendEmail from "../utils/sendEmail.js";
+import verifyOTP from "../utils/verifyOTP.js";
 
 
 import fs from "fs";
@@ -85,30 +86,12 @@ export const sendOtp = async (req, res) => {
 export const verifyOtpAndRegister = async (req, res) => {
   const { email, name, password, userOTP } = req.body;
   try {
+        const response = await verifyOTP(userOTP);
 
-    const otpRecord = await otp.findOne({email});
-    const isUser = await User.findOne({email});
-
-    if(isUser) return res.status(400).json({
-      success:false,
-      message:'Already registered'
-    })
-
-    if(!otpRecord) return res.status(400).json({
-      success:false,
-      message:'Otp not found or expired'
-    })
-
-
-    if(otpRecord.otp != userOTP) return res.status(401).json({
-      success:true,
-      message:'Invalid OTP'
-    })
-
-    if(otpRecord.expiresAt<Date.now()) return res.status(400).json({
-      success:false,
-      message:'OTP Expired'
-    })
+        if(!response.data.success){
+          return response.data
+        }
+  
    
     const hashedPassword = await bcrypt.hash(password,10);
 
@@ -217,3 +200,12 @@ export const logOut = (req, res) => {
     message: "Logged-Out",
   });
 };
+
+
+const resetPassword = async(req,res)=>{
+  const {otp} = req.body;
+
+
+
+
+}
